@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:online_app_final_project/page/navigation_bar.dart';
+import 'package:online_app_final_project/page/detail_product.dart';
 import 'package:online_app_final_project/page/splash_screen.dart';
 
 void main() {
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(),
-      home: const SplashScreen(),
+      home: const DetailProduct(),
     );
   }
 }

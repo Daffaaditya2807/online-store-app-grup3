@@ -1,7 +1,9 @@
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:online_app_final_project/component/card_list.dart';
 import 'package:online_app_final_project/component/list_colour.dart';
+import 'package:online_app_final_project/component/text_field.dart';
 
 class ProductList extends StatefulWidget {
   const ProductList({super.key});
@@ -11,6 +13,28 @@ class ProductList extends StatefulWidget {
 }
 
 class _ProductListState extends State<ProductList> {
+  final TextEditingController _controllerSearch = TextEditingController();
+
+  List<Tab> categoryProduct = [
+    const Tab(
+      text: "All",
+    ),
+    const Tab(
+      text: "Jacket",
+    ),
+    const Tab(
+      text: "Shirt",
+    ),
+    const Tab(
+      text: "Men",
+    ),
+    const Tab(
+      text: "Kids",
+    ),
+    const Tab(
+      text: "Women",
+    ),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,24 +63,13 @@ class _ProductListState extends State<ProductList> {
                 Row(
                   children: [
                     Expanded(
-                      child: TextField(
-                        cursorColor: brownSecondary,
-                        decoration: InputDecoration(
-                            hintText: "Explore Our New Arrivals",
-                            hintStyle: GoogleFonts.montserrat(),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide(
-                                    color: greyPrimary.withAlpha(40))),
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide(
-                                    color: greyPrimary.withAlpha(40))),
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide(
-                                    color: greyPrimary.withAlpha(40)))),
-                      ),
+                      child: textFieldSearch(
+                          controller: _controllerSearch,
+                          onSubmitted: (value) {
+                            // fungsi cari barang
+                            print(value);
+                          },
+                          hintText: "Explore Your Our Products!"),
                     ),
                     const SizedBox(
                       width: 10,
@@ -70,7 +83,7 @@ class _ProductListState extends State<ProductList> {
                         child: IconButton(
                             onPressed: () {},
                             icon: const Icon(
-                              Icons.search,
+                              Icons.shopping_bag,
                               color: Colors.white,
                             )),
                       ),
@@ -89,35 +102,16 @@ class _ProductListState extends State<ProductList> {
                 ),
                 ButtonsTabBar(
                   radius: 15,
-                  contentPadding: EdgeInsets.symmetric(horizontal: 25),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 25),
                   unselectedBorderColor: greyPrimary.withAlpha(40),
                   borderWidth: 1,
                   unselectedBackgroundColor: Colors.transparent,
                   borderColor: Colors.transparent,
                   decoration: BoxDecoration(color: brownSecondary),
-                  unselectedLabelStyle: TextStyle(color: Colors.black),
-                  labelStyle: TextStyle(color: Colors.white),
+                  unselectedLabelStyle: const TextStyle(color: Colors.black),
+                  labelStyle: const TextStyle(color: Colors.white),
                   height: 50,
-                  tabs: const [
-                    Tab(
-                      text: "All",
-                    ),
-                    Tab(
-                      text: "Jacket",
-                    ),
-                    Tab(
-                      text: "Shirt",
-                    ),
-                    Tab(
-                      text: "Men",
-                    ),
-                    Tab(
-                      text: "Kids",
-                    ),
-                    Tab(
-                      text: "Women",
-                    ),
-                  ],
+                  tabs: categoryProduct,
                 ),
                 const SizedBox(
                   height: 10,
@@ -135,76 +129,25 @@ class _ProductListState extends State<ProductList> {
                                 crossAxisCount: 2),
                         itemCount: 10,
                         itemBuilder: (context, index) {
-                          return Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                border: Border.all(
-                                    color: greyPrimary.withAlpha(40))),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    height: 100,
-                                    decoration: BoxDecoration(
-                                        color: greyLight,
-                                        image: const DecorationImage(
-                                            fit: BoxFit.cover,
-                                            image: AssetImage(
-                                                "assets/brown_jacket.jpg")),
-                                        borderRadius: const BorderRadius.only(
-                                            topLeft: Radius.circular(10),
-                                            topRight: Radius.circular(10))),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "Brown Jacket",
-                                        style: GoogleFonts.montserrat(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 14),
-                                      ),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.star,
-                                            size: 20,
-                                            color: Colors.orange.shade400,
-                                          ),
-                                          Text("1.2",
-                                              style: GoogleFonts.montserrat()),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                  Text("Rp. 12.000",
-                                      style:
-                                          GoogleFonts.montserrat(fontSize: 14))
-                                ],
-                              ),
-                            ),
-                          );
+                          return cardProduct(
+                              asset: "assets/brown_jacket.jpg",
+                              item: "Brown Jacket",
+                              harga: "Rp. 50.000");
                         },
                       ),
-                      Center(
+                      const Center(
                         child: Text("Available Soon!"),
                       ),
-                      Center(
+                      const Center(
                         child: Text("Available Soon!"),
                       ),
-                      Center(
+                      const Center(
                         child: Text("Available Soon!"),
                       ),
-                      Center(
+                      const Center(
                         child: Text("Available Soon!"),
                       ),
-                      Center(
+                      const Center(
                         child: Text("Available Soon!"),
                       ),
                     ],
