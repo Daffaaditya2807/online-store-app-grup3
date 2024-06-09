@@ -40,7 +40,10 @@ class _DetailProductState extends State<DetailProduct> {
                           decoration: const ShapeDecoration(
                               shape: CircleBorder(), color: Colors.white),
                           child: IconButton(
-                              onPressed: () {}, icon: Icon(Icons.arrow_back))),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              icon: Icon(Icons.arrow_back))),
                       Container(
                           decoration: const ShapeDecoration(
                               shape: CircleBorder(), color: Colors.white),

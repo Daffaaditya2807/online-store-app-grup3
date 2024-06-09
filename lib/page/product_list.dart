@@ -4,6 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:online_app_final_project/component/card_list.dart';
 import 'package:online_app_final_project/component/list_colour.dart';
 import 'package:online_app_final_project/component/text_field.dart';
+import 'package:online_app_final_project/page/cart_product.dart';
+import 'package:online_app_final_project/page/detail_product.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class ProductList extends StatefulWidget {
   const ProductList({super.key});
@@ -81,7 +84,16 @@ class _ProductListState extends State<ProductList> {
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              PersistentNavBarNavigator.pushNewScreen(
+                                context,
+                                screen: CartProduct(),
+                                withNavBar:
+                                    false, // OPTIONAL VALUE. True by default.
+                                pageTransitionAnimation:
+                                    PageTransitionAnimation.cupertino,
+                              );
+                            },
                             icon: const Icon(
                               Icons.shopping_bag,
                               color: Colors.white,
@@ -129,10 +141,25 @@ class _ProductListState extends State<ProductList> {
                                 crossAxisCount: 2),
                         itemCount: 10,
                         itemBuilder: (context, index) {
-                          return cardProduct(
-                              asset: "assets/brown_jacket.jpg",
-                              item: "Brown Jacket",
-                              harga: "Rp. 50.000");
+                          return InkWell(
+                            onTap: () {
+                              PersistentNavBarNavigator.pushNewScreen(
+                                context,
+                                screen: DetailProduct(),
+                                withNavBar:
+                                    false, // OPTIONAL VALUE. True by default.
+                                pageTransitionAnimation:
+                                    PageTransitionAnimation.cupertino,
+                              );
+
+                              // print(index);
+                            },
+                            child: cardProduct(
+                                asset: "assets/brown_jacket.jpg",
+                                item: "Brown Jacket",
+                                rate: "1.2",
+                                harga: "Rp. 50.000"),
+                          );
                         },
                       ),
                       const Center(
