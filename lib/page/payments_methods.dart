@@ -39,10 +39,26 @@ class _PaymentOptionsPageState extends State<PaymentOptionsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Payments Methods'),
+        title: Text(
+          'Payment Methods',
+          style:
+              GoogleFonts.montserrat(fontSize: 20, fontWeight: FontWeight.w600),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_circle_left_outlined),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
       ),
       body: Stack(
         children: [
+          // Ubah warna background di sini
+          Container(
+            color: Colors.white, // Ganti dengan warna yang diinginkan
+          ),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -61,7 +77,8 @@ class _PaymentOptionsPageState extends State<PaymentOptionsPage> {
                 SizedBox(height: 10),
                 Container(
                   decoration: BoxDecoration(
-                    border: Border.all(color: greyLight),
+                    border:
+                        Border.all(color: Color.fromARGB(215, 215, 215, 215)),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Column(
@@ -148,16 +165,8 @@ class _PaymentOptionsPageState extends State<PaymentOptionsPage> {
         SizedBox(height: 10),
         Container(
           decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(15),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black12,
-                blurRadius: 10,
-                offset: Offset(0, 5),
-              ),
-            ],
-          ),
+              borderRadius: BorderRadius.circular(15),
+              border: Border.all(color: Color.fromARGB(215, 215, 215, 215))),
           child: ListTile(
             leading: Icon(Icons.credit_card, color: brownSecondary),
             title: Text(
@@ -203,6 +212,7 @@ class _PaymentOptionsPageState extends State<PaymentOptionsPage> {
     );
   }
 }
+
 
 // Widget _buildContainerPaypal() {
 //   return Container(
