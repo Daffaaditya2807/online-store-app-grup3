@@ -3,24 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:online_app_final_project/component/list_colour.dart';
 
-// void main() {
-//   runApp(MyApp());
-// }
-
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Payment Options',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//         visualDensity: VisualDensity.adaptivePlatformDensity,
-//       ),
-//       home: PaymentOptionsPage(),
-//     );
-//   }
-// }
-
 class PaymentOptionsPage extends StatefulWidget {
   @override
   _PaymentOptionsPageState createState() => _PaymentOptionsPageState();
@@ -39,31 +21,35 @@ class _PaymentOptionsPageState extends State<PaymentOptionsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Payment Methods',
-          style:
-              GoogleFonts.montserrat(fontSize: 20, fontWeight: FontWeight.w600),
-        ),
-        centerTitle: true,
         backgroundColor: Colors.white,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_circle_left_outlined),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+        leading: Padding(
+          padding: EdgeInsets.only(top: 20.0),
+          child: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
         ),
       ),
       body: Stack(
         children: [
-          // Ubah warna background di sini
           Container(
-            color: Colors.white, // Ganti dengan warna yang diinginkan
+            color: Colors.white,
           ),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Center(
+                  child: Text(
+                    'Payment Methods',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.montserrat(
+                        fontSize: 20, fontWeight: FontWeight.w600),
+                  ),
+                ),
                 SizedBox(height: 30),
                 _buildCreateDebitCard(),
                 SizedBox(height: 30),
@@ -88,11 +74,13 @@ class _PaymentOptionsPageState extends State<PaymentOptionsPage> {
                         logo: 'assets/paypal.png',
                         value: 'Paypal',
                       ),
+                      Divider(),
                       _buildPaymentOption(
                         title: 'Apple Pay',
                         logo: 'assets/apple-pay.png',
                         value: 'Apple Pay',
                       ),
+                      Divider(),
                       _buildPaymentOption(
                         title: 'Google Pay',
                         logo: 'assets/google-pay.png',
@@ -106,47 +94,6 @@ class _PaymentOptionsPageState extends State<PaymentOptionsPage> {
           ),
           _buildBottomButton(),
         ],
-      ),
-    );
-  }
-
-  Positioned _buildBottomButton() {
-    return Positioned(
-      bottom: 0,
-      left: 0,
-      right: 0,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10),
-            topRight: Radius.circular(10),
-          ),
-        ),
-        padding: EdgeInsets.all(8.0),
-        child: Center(
-          child: ElevatedButton(
-            onPressed: () {},
-            style: ElevatedButton.styleFrom(
-              backgroundColor: brownSecondary, // Background color
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0), // Rounded edges
-              ),
-            ),
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 50.0, vertical: 15.0),
-              child: Text(
-                'Confirm Payment',
-                style: GoogleFonts.montserrat(
-                    fontSize: 20,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.white),
-              ),
-            ),
-          ),
-        ),
       ),
     );
   }
@@ -186,67 +133,76 @@ class _PaymentOptionsPageState extends State<PaymentOptionsPage> {
 
   Widget _buildPaymentOption(
       {required String title, required String logo, required String value}) {
-    return Container(
-      margin:
-          EdgeInsets.symmetric(vertical: 4), // margin between internal borders
-      child: RadioListTile(
-        activeColor: brownSecondary,
-        controlAffinity: ListTileControlAffinity
-            .trailing, // This will put the radio button on the right
-        secondary: Image.asset(
-          logo,
-          width: 40,
-          height: 40,
+    return Column(
+      children: [
+        Container(
+          margin: EdgeInsets.symmetric(
+              vertical: 4), // margin between internal borders
+          child: RadioListTile(
+            activeColor: brownSecondary,
+            controlAffinity: ListTileControlAffinity
+                .trailing, // This will put the radio button on the right
+            secondary: Image.asset(
+              logo,
+              width: 40,
+              height: 40,
+            ),
+            title: Text(
+              title,
+              style: GoogleFonts.montserrat(
+                  fontSize: 18,
+                  fontWeight: FontWeight.normal,
+                  color: greyPrimary),
+            ),
+            value: value,
+            groupValue: _selectedPaymentMethod,
+            onChanged: (String? newValue) {
+              _onPaymentMethodSelected(newValue!);
+            },
+          ),
         ),
-        title: Text(
-          title,
-          style: GoogleFonts.montserrat(
-              fontSize: 18, fontWeight: FontWeight.normal, color: greyPrimary),
+      ],
+    );
+  }
+
+  Positioned _buildBottomButton() {
+    return Positioned(
+      bottom: 0,
+      left: 0,
+      right: 0,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(color: Color.fromARGB(215, 215, 215, 215)),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10),
+            topRight: Radius.circular(10),
+          ),
         ),
-        value: value,
-        groupValue: _selectedPaymentMethod,
-        onChanged: (String? newValue) {
-          _onPaymentMethodSelected(newValue!);
-        },
+        padding: EdgeInsets.all(27.0),
+        child: Center(
+          child: ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              backgroundColor: brownSecondary,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+            ),
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 65.0, vertical: 10.0),
+              child: Text(
+                'Confirm Payment',
+                style: GoogleFonts.montserrat(
+                    fontSize: 20,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.white),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
 }
-
-
-// Widget _buildContainerPaypal() {
-//   return Container(
-//     decoration: BoxDecoration(
-//       border: Border(
-//         left: BorderSide(color: Colors.grey, width: 2.0),
-//         top: BorderSide(color: Colors.grey, width: 2.0),
-//         right: BorderSide(color: Colors.grey, width: 2.0),
-//       ),
-//       borderRadius: BorderRadius.circular(10),
-//     ),
-//   );
-// }
-
-// Widget _buildContainerApplePay() {
-//   return Container(
-//     decoration: BoxDecoration(
-//       border: Border(
-//         left: BorderSide(color: Colors.grey, width: 2.0),
-//         right: BorderSide(color: Colors.grey, width: 2.0),
-//       ),
-//     ),
-//   );
-// }
-
-// Widget _buildContainerGooglePay() {
-//   return Container(
-//     decoration: BoxDecoration(
-//       border: Border(
-//         left: BorderSide(color: Colors.grey, width: 2.0),
-//         bottom: BorderSide(color: Colors.grey, width: 2.0),
-//         right: BorderSide(color: Colors.grey, width: 2.0),
-//       ),
-//       borderRadius: BorderRadius.circular(10),
-//     ),
-//   );
-// }
