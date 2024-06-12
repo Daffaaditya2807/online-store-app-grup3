@@ -19,9 +19,8 @@ class _ProfileDetailState extends State<ProfileDetail> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_new_outlined),
           onPressed: () {
-            Navigator.push(
+            Navigator.pop(
               context,
-              MaterialPageRoute(builder: (context) => ProfilePage()),
             );
           },
           color: Color(0xFF1F2029),
@@ -197,7 +196,7 @@ class _ProfileDetailState extends State<ProfileDetail> {
                     ),
                   ),
                 ),
-                SizedBox(height: 30),
+                SizedBox(height: 70),
               ],
             ),
           ),

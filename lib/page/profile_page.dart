@@ -5,14 +5,14 @@ import 'package:online_app_final_project/component/list_colour.dart';
 import 'package:online_app_final_project/page/profile_detail.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+class Profile extends StatefulWidget {
+  const Profile({super.key});
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  State<Profile> createState() => _ProfileState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -259,90 +259,7 @@ class _ProfilePageState extends State<ProfilePage> {
             children: [
               GestureDetector(
                 onTap: () {
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (context) {
-                      return Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Wrap(
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 160),
-                              child: Divider(
-                                thickness: 3,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 10),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text("Sub Total",
-                                      style: GoogleFonts.montserrat(
-                                        fontSize: 14,
-                                      )),
-                                  Text("Rp. 160.000",
-                                      style: GoogleFonts.montserrat(
-                                        fontSize: 14,
-                                      ))
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 10.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text("Delivery Fee",
-                                      style: GoogleFonts.montserrat(
-                                        fontSize: 14,
-                                      )),
-                                  Text("Rp. 15.000",
-                                      style: GoogleFonts.montserrat(
-                                        fontSize: 14,
-                                      ))
-                                ],
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            Divider(),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 10.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text("Total Cost",
-                                      style: GoogleFonts.montserrat(
-                                        fontSize: 14,
-                                      )),
-                                  Text("Rp. 175.000",
-                                      style: GoogleFonts.montserrat(
-                                        fontSize: 14,
-                                      ))
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 20, bottom: 5),
-                              child: button(
-                                  nameButton: "Confirm Checkout",
-                                  onPress: () {},
-                                  colorButton: brownSecondary,
-                                  textColorButton: Colors.white),
-                            )
-                          ],
-                        ),
-                      );
-                    },
-                  );
+                  _showLogoutDialog(context);
                 },
                 child: Container(
                   height: 35,
@@ -393,6 +310,65 @@ class _ProfilePageState extends State<ProfilePage> {
           )
         ],
       ),
+    );
+  }
+
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          title: Text(
+            "Logout",
+            textAlign: TextAlign.center,
+            style: GoogleFonts.montserrat(
+              fontWeight: FontWeight.w500,
+              fontSize: 22,
+              color: Color(0xFF1F2029),
+            ),
+          ),
+          content: Text(
+            "Are you sure you want to log out?",
+            style: GoogleFonts.montserrat(
+              fontWeight: FontWeight.w400,
+              fontSize: 16,
+              color: Color(0xFF1F2029),
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                "Cancel",
+                style: GoogleFonts.montserrat(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                  color: Color(0xFF1F2029),
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text(
+                "Logout",
+                style: GoogleFonts.montserrat(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                  color: Colors.red,
+                ),
+              ),
+              onPressed: () {
+                // Add your logout logic here
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

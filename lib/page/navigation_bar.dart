@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:online_app_final_project/component/list_colour.dart';
 import 'package:online_app_final_project/page/product_list.dart';
 import 'package:online_app_final_project/page/profile.dart';
+import 'package:online_app_final_project/page/profile_page.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class NavigationBarBottom extends StatefulWidget {
@@ -26,7 +27,7 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
       const Center(
         child: Text("Halaman Favorite"),
       ),
-      const ProfilePage()
+      const Profile()
     ];
   }
 
