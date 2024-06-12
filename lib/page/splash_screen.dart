@@ -2,7 +2,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:online_app_final_project/component/list_colour.dart';
-import 'package:online_app_final_project/page/navigation_bar.dart';
 import 'package:online_app_final_project/page/login.dart';
 import 'package:online_app_final_project/page/register.dart';
 

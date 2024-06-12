@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:online_app_final_project/page/detail_product.dart';
 import 'package:online_app_final_project/page/splash_screen.dart';
 
 void main() {
@@ -13,10 +12,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(),
-      home: SplashScreen(),
-    );
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(),
+        home: const SplashScreen());
   }
 }

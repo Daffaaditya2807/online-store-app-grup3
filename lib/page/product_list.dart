@@ -53,13 +53,8 @@ class _ProductListState extends State<ProductList> {
                   height: 10,
                 ),
                 Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "Product",
-                    style: GoogleFonts.montserrat(
-                        fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                ),
+                    alignment: Alignment.center,
+                    child: Image.asset("assets/logoapp.png")),
                 const SizedBox(
                   height: 20,
                 ),
