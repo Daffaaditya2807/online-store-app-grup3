@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:online_app_final_project/page/navigation_bar.dart';
 import 'package:online_app_final_project/page/profile.dart';
 
 class ProfileDetail extends StatefulWidget {
@@ -175,7 +176,10 @@ class _ProfileDetailState extends State<ProfileDetail> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ProfilePage()),
+                        MaterialPageRoute(
+                            builder: (context) => NavigationBarBottom(
+                                  initialIndex: 4,
+                                )),
                       );
                     },
                     style: ElevatedButton.styleFrom(
