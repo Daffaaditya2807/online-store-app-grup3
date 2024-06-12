@@ -181,7 +181,7 @@ class _DetailProductState extends State<DetailProduct> {
             Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: button(
-                    nameButton: "Add to Cart",
+                    nameButton: "Add to Cartssssss",
                     textColorButton: Colors.white,
                     onPress: () {
                       _showAlertDialog(context);
