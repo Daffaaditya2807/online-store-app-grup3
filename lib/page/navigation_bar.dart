@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:online_app_final_project/page/dashboard.dart';
 import 'package:online_app_final_project/page/favorite_product.dart';
+import 'package:online_app_final_project/page/my_order.dart';
 import 'package:online_app_final_project/page/product_list.dart';
 import 'package:online_app_final_project/page/profile.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-
 
 class NavigationBarBottom extends StatefulWidget {
   final int initialIndex;
@@ -28,15 +28,9 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
       // Halaman Favorite taruh bawah IMPORT
       const FavoritePage(),
       // Halaman Transaksi taruh bawah IMPORT
-      const Scaffold(
-        body: Center(child: Text("Halaman Transaksi Soon!")),
-      ),
+      TransactionHistoryPage(),
       // Halaman Profile taruh bawah IMPORT
-      const Scaffold(
-        body: Center(child: Text("Halaman Profile Soon!")),
-      ),
       const ProfilePage()
-
     ];
   }
 

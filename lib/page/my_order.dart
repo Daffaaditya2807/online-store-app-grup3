@@ -1,36 +1,37 @@
 import 'package:flutter/material.dart';
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: TransactionHistoryPage(),
-    );
-  }
-}
+import 'package:google_fonts/google_fonts.dart';
 
 class TransactionHistoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {},
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 20,
+              ),
+              Text('My Order',
+                  style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.bold, fontSize: 20)),
+              const SizedBox(
+                height: 10,
+              ),
+              ListView.builder(
+                padding: EdgeInsets.all(16.0),
+                shrinkWrap: true,
+                itemCount: 5, // Replace with the number of transactions
+                itemBuilder: (context, index) {
+                  return TransactionCard();
+                },
+              ),
+              const SizedBox(
+                height: 80,
+              )
+            ],
+          ),
         ),
-        title: Text('My Order'),
-        centerTitle: true,
-      ),
-      body: ListView.builder(
-        padding: EdgeInsets.all(16.0),
-        itemCount: 5, // Replace with the number of transactions
-        itemBuilder: (context, index) {
-          return TransactionCard();
-        },
       ),
     );
   }
@@ -40,7 +41,7 @@ class TransactionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 8.0),
+      margin: const EdgeInsets.symmetric(vertical: 8.0),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
       ),
@@ -54,7 +55,7 @@ class TransactionCard extends StatelessWidget {
               children: [
                 Text(
                   '7 June 2024',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: GoogleFonts.montserrat(fontWeight: FontWeight.bold),
                 ),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
@@ -64,13 +65,14 @@ class TransactionCard extends StatelessWidget {
                   ),
                   child: Text(
                     'Done',
-                    style: TextStyle(
+                    style: GoogleFonts.montserrat(
                         color: Colors.green, fontWeight: FontWeight.bold),
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 8.0),
+            const Divider(),
+            const SizedBox(height: 8.0),
             Row(
               children: [
                 ClipRRect(
@@ -82,26 +84,27 @@ class TransactionCard extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                 ),
-                SizedBox(width: 16.0),
+                const SizedBox(width: 16.0),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Brown Suite',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(height: 4.0),
-                      Text('10 pcs'),
-                      SizedBox(height: 4.0),
+                      Text('Brown Suite',
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 4.0),
+                      Text('10 pcs', style: GoogleFonts.montserrat()),
+                      const SizedBox(height: 4.0),
                       Text('Rp 10.000.000',
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                      SizedBox(height: 4.0),
-                      Text('#TR2456DEDK', style: TextStyle(color: Colors.grey)),
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 4.0),
+                      Text('#TR2456DEDK',
+                          style: GoogleFonts.montserrat(color: Colors.grey)),
                     ],
                   ),
                 ),
-                SizedBox(width: 16.0),
+                const SizedBox(width: 16.0),
                 ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
@@ -110,7 +113,10 @@ class TransactionCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                   ),
-                  child: Text('Buy Again'),
+                  child: Text(
+                    'Buy Again',
+                    style: GoogleFonts.montserrat(color: Colors.white),
+                  ),
                 ),
               ],
             ),
