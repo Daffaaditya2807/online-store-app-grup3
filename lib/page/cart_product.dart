@@ -1,3 +1,4 @@
+import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:online_app_final_project/component/button.dart';
@@ -105,7 +106,9 @@ class _CartProductState extends State<CartProduct> {
                           const SizedBox(
                             height: 15,
                           ),
-                          Divider(),
+                          DottedLine(
+                            dashColor: greyPrimary,
+                          ),
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 10.0),
                             child: Row(

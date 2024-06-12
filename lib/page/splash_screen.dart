@@ -2,7 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:online_app_final_project/component/list_colour.dart';
-import 'package:online_app_final_project/page/navigation_bar.dart';
+import 'package:online_app_final_project/page/login.dart';
+import 'package:online_app_final_project/page/register.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -57,7 +58,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const NavigationBarBottom(),
+                            builder: (context) => LoginPage(),
                           ));
                     },
                     style: ElevatedButton.styleFrom(
@@ -83,7 +84,10 @@ class _SplashScreenState extends State<SplashScreen> {
                             text: "Sign Up",
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                print("sign up bruh");
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => RegisterPage()));
                               },
                             style: GoogleFonts.montserrat(
                                 color: brownPrimary,
@@ -99,20 +103,6 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Widget _logoApps() {
-    return Column(
-      children: [
-        Image.asset("assets/logo.png"),
-        Text(
-          "DEKA",
-          style: GoogleFonts.montserrat(
-              fontSize: 24, fontWeight: FontWeight.bold, color: greyLight),
-        ),
-        Text(
-          "STORE",
-          style: GoogleFonts.montserrat(
-              fontSize: 24, fontWeight: FontWeight.bold, color: greyLight),
-        )
-      ],
-    );
+    return Image.asset("assets/logosplash.png");
   }
 }

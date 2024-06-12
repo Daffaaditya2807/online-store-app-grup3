@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:online_app_final_project/component/list_colour.dart';
+import 'package:online_app_final_project/page/dashboard.dart';
+import 'package:online_app_final_project/page/favorite_product.dart';
 import 'package:online_app_final_project/page/product_list.dart';
 import 'package:online_app_final_project/page/profile.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+
 
 class NavigationBarBottom extends StatefulWidget {
   final int initialIndex;
@@ -15,100 +17,219 @@ class NavigationBarBottom extends StatefulWidget {
 }
 
 class _NavigationBarBottomState extends State<NavigationBarBottom> {
-  late PersistentTabController? _controller;
+  int pageSelected = 0;
+  late PageController? _myPage;
 
   List<Widget> _buildScreens() {
     return [
-      const Center(
-        child: Text("Halaman Dashboard"),
-      ),
+      const DashboardPage(),
+
       const ProductList(),
-      const Center(
-        child: Text("Halaman Favorite"),
+      // Halaman Favorite taruh bawah IMPORT
+      const FavoritePage(),
+      // Halaman Transaksi taruh bawah IMPORT
+      const Scaffold(
+        body: Center(child: Text("Halaman Transaksi Soon!")),
+      ),
+      // Halaman Profile taruh bawah IMPORT
+      const Scaffold(
+        body: Center(child: Text("Halaman Profile Soon!")),
       ),
       const ProfilePage()
+
     ];
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    _controller = PersistentTabController(initialIndex: widget.initialIndex);
+    _myPage = PageController(initialPage: widget.initialIndex);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _myPage?.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: PersistentTabView(context,
-          controller: _controller,
-          screens: _buildScreens(),
-          items: _navBarsItems(),
-          confineInSafeArea: true,
-          margin: const EdgeInsets.only(
-            bottom: 20,
-            left: 40,
-            right: 40,
-          ),
-          bottomScreenMargin: 0,
-          backgroundColor: brownSecondary, // Default is Colors.white.
-          handleAndroidBackButtonPress: true, // Default is true.
-          resizeToAvoidBottomInset:
-              true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
-          stateManagement: true, // Default is true.
-          hideNavigationBarWhenKeyboardShows:
-              true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
-          decoration: NavBarDecoration(
-              borderRadius: BorderRadius.circular(30.0),
-              colorBehindNavBar: Colors.white,
-              adjustScreenBottomPaddingOnCurve: true,
-              border: Border.all(color: brownPrimary)),
-          popAllScreensOnTapOfSelectedTab: true,
-          popActionScreens: PopActionScreensType.all,
-          itemAnimationProperties: const ItemAnimationProperties(
-            // Navigation Bar's items animation properties.
-            duration: Duration(milliseconds: 200),
-            curve: Curves.ease,
-          ),
-          screenTransitionAnimation: const ScreenTransitionAnimation(
-            // Screen transition animation on change of selected tab.
-            animateTabTransition: true,
-            curve: Curves.ease,
-            duration: Duration(milliseconds: 200),
-          ),
-          navBarStyle: NavBarStyle
-              .style12 // Choose the nav bar style with this property.
-          ),
+      resizeToAvoidBottomInset: false,
+      body: PageView(
+        controller: _myPage,
+        onPageChanged: (value) {
+          setState(() {
+            pageSelected = value;
+          });
+        },
+        children: _buildScreens(),
+      ),
+      floatingActionButton:
+          _navbarCostum(pageSelected: pageSelected, myPage: _myPage),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
-  List<PersistentBottomNavBarItem> _navBarsItems() {
-    return [
-      PersistentBottomNavBarItem(
-        icon: const Icon(CupertinoIcons.home),
-        title: ("Home"),
-        activeColorPrimary: CupertinoColors.white,
-        inactiveColorPrimary: CupertinoColors.systemGrey4,
+  Widget _navbarCostum({int? pageSelected, PageController? myPage}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 20,
       ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(CupertinoIcons.bag),
-        title: ("Settings"),
-        activeColorPrimary: CupertinoColors.white,
-        inactiveColorPrimary: CupertinoColors.systemGrey4,
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+            color: const Color(0xff704F38),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: const Offset(0, 3), // changes position of shadow
+              ),
+            ],
+            borderRadius: BorderRadius.circular(50)),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              AnimatedContainer(
+                duration: Duration(milliseconds: 500),
+                curve: Curves.ease,
+                decoration: ShapeDecoration(
+                    shape: const CircleBorder(),
+                    color: pageSelected == 0
+                        ? Colors.white
+                        : const Color(0xff704F38)),
+                child: Padding(
+                    padding: const EdgeInsets.all(3),
+                    child: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          myPage?.jumpToPage(0);
+                          pageSelected = 0;
+                        });
+                      },
+                      icon: Icon(
+                        CupertinoIcons.home,
+                        color: pageSelected == 0
+                            ? const Color(0xff704F38)
+                            : Colors.white,
+                        size: 30,
+                      ),
+                    )),
+              ),
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.ease,
+                decoration: ShapeDecoration(
+                    shape: const CircleBorder(),
+                    color: pageSelected == 1
+                        ? Colors.white
+                        : const Color(0xff704F38)),
+                child: Padding(
+                    padding: const EdgeInsets.all(3),
+                    child: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          myPage?.jumpToPage(1);
+                          pageSelected = 1;
+                        });
+                      },
+                      icon: Icon(
+                        CupertinoIcons.cart,
+                        color: pageSelected == 1
+                            ? const Color(0xff704F38)
+                            : Colors.white,
+                        size: 30,
+                      ),
+                    )),
+              ),
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.ease,
+                decoration: ShapeDecoration(
+                    shape: const CircleBorder(),
+                    color: pageSelected == 2
+                        ? Colors.white
+                        : const Color(0xff704F38)),
+                child: Padding(
+                    padding: const EdgeInsets.all(3),
+                    child: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          myPage?.jumpToPage(2);
+                          pageSelected = 2;
+                        });
+                      },
+                      icon: Icon(
+                        CupertinoIcons.heart,
+                        color: pageSelected == 2
+                            ? const Color(0xff704F38)
+                            : Colors.white,
+                        size: 30,
+                      ),
+                    )),
+              ),
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.ease,
+                decoration: ShapeDecoration(
+                    shape: const CircleBorder(),
+                    color: pageSelected == 3
+                        ? Colors.white
+                        : const Color(0xff704F38)),
+                child: Padding(
+                  padding: const EdgeInsets.all(3),
+                  child: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          myPage?.jumpToPage(3);
+                          pageSelected = 3;
+                        });
+                      },
+                      icon: Icon(
+                        CupertinoIcons.doc_text,
+                        color: pageSelected == 3
+                            ? Color(0xff704F38)
+                            : Colors.white,
+                        size: 30,
+                      )),
+                ),
+              ),
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.ease,
+                decoration: ShapeDecoration(
+                    shape: const CircleBorder(),
+                    color: pageSelected == 4
+                        ? Colors.white
+                        : const Color(0xff704F38)),
+                child: Padding(
+                  padding: const EdgeInsets.all(3),
+                  child: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          myPage?.jumpToPage(4);
+                          pageSelected = 4;
+                        });
+                      },
+                      icon: Icon(
+                        CupertinoIcons.profile_circled,
+                        color: pageSelected == 4
+                            ? Color(0xff704F38)
+                            : Colors.white,
+                        size: 30.0,
+                      )),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(CupertinoIcons.heart),
-        title: ("Favorite"),
-        activeColorPrimary: CupertinoColors.white,
-        inactiveColorPrimary: CupertinoColors.systemGrey4,
-      ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(CupertinoIcons.profile_circled),
-        title: ("Profile"),
-        activeColorPrimary: CupertinoColors.white,
-        inactiveColorPrimary: CupertinoColors.systemGrey4,
-      ),
-    ];
+    );
   }
 }
