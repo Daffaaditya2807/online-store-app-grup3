@@ -38,6 +38,7 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
   void initState() {
     super.initState();
     _myPage = PageController(initialPage: widget.initialIndex);
+    pageSelected = widget.initialIndex;
   }
 
   @override
