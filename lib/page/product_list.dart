@@ -127,7 +127,7 @@ class _ProductListState extends State<ProductList> {
                   child: TabBarView(
                     children: <Widget>[
                       GridView.builder(
-                        padding: const EdgeInsets.only(bottom: 80),
+                        padding: const EdgeInsets.only(bottom: 100),
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                                 mainAxisSpacing: 5.0,
@@ -146,8 +146,6 @@ class _ProductListState extends State<ProductList> {
                                 pageTransitionAnimation:
                                     PageTransitionAnimation.cupertino,
                               );
-
-                              // print(index);
                             },
                             child: cardProduct(
                                 asset: "assets/brown_jacket.jpg",

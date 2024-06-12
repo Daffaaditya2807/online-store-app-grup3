@@ -106,11 +106,11 @@ class _DetailProductState extends State<DetailProduct> {
                           style: GoogleFonts.montserrat(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: brownPrimary)),
+                              color: brownSecondary)),
                       Card(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15)),
-                        color: brownPrimary,
+                        color: brownSecondary,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 15, vertical: 10),

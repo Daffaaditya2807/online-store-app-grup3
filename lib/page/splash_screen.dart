@@ -103,20 +103,6 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Widget _logoApps() {
-    return Column(
-      children: [
-        Image.asset("assets/logo.png"),
-        Text(
-          "DEKA",
-          style: GoogleFonts.montserrat(
-              fontSize: 24, fontWeight: FontWeight.bold, color: greyLight),
-        ),
-        Text(
-          "STORE",
-          style: GoogleFonts.montserrat(
-              fontSize: 24, fontWeight: FontWeight.bold, color: greyLight),
-        )
-      ],
-    );
+    return Image.asset("assets/logosplash.png");
   }
 }

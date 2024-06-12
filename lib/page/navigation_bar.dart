@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:online_app_final_project/page/dashboard.dart';
+import 'package:online_app_final_project/page/favorite_product.dart';
 import 'package:online_app_final_project/page/product_list.dart';
 
 class NavigationBarBottom extends StatefulWidget {
@@ -19,11 +20,10 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
   List<Widget> _buildScreens() {
     return [
       const DashboardPage(),
+
       const ProductList(),
       // Halaman Favorite taruh bawah IMPORT
-      const Scaffold(
-        body: Center(child: Text("Halaman Favorite Soon!")),
-      ),
+      const FavoritePage(),
       // Halaman Transaksi taruh bawah IMPORT
       const Scaffold(
         body: Center(child: Text("Halaman Transaksi Soon!")),
@@ -42,9 +42,17 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _myPage?.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
+      resizeToAvoidBottomInset: false,
       body: PageView(
         controller: _myPage,
         onPageChanged: (value) {
@@ -74,7 +82,7 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
                 color: Colors.grey.withOpacity(0.5),
                 spreadRadius: 5,
                 blurRadius: 7,
-                offset: Offset(0, 3), // changes position of shadow
+                offset: const Offset(0, 3), // changes position of shadow
               ),
             ],
             borderRadius: BorderRadius.circular(50)),
@@ -110,7 +118,7 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
                     )),
               ),
               AnimatedContainer(
-                duration: Duration(milliseconds: 500),
+                duration: const Duration(milliseconds: 500),
                 curve: Curves.ease,
                 decoration: ShapeDecoration(
                     shape: const CircleBorder(),
@@ -136,7 +144,7 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
                     )),
               ),
               AnimatedContainer(
-                duration: Duration(milliseconds: 500),
+                duration: const Duration(milliseconds: 500),
                 curve: Curves.ease,
                 decoration: ShapeDecoration(
                     shape: const CircleBorder(),
@@ -162,7 +170,7 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
                     )),
               ),
               AnimatedContainer(
-                duration: Duration(milliseconds: 500),
+                duration: const Duration(milliseconds: 500),
                 curve: Curves.ease,
                 decoration: ShapeDecoration(
                     shape: const CircleBorder(),
@@ -188,7 +196,7 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
                 ),
               ),
               AnimatedContainer(
-                duration: Duration(milliseconds: 500),
+                duration: const Duration(milliseconds: 500),
                 curve: Curves.ease,
                 decoration: ShapeDecoration(
                     shape: const CircleBorder(),
