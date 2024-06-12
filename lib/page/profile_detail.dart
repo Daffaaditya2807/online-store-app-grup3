@@ -19,10 +19,7 @@ class _ProfileDetailState extends State<ProfileDetail> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_new_outlined),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ProfilePage()),
-            );
+            Navigator.of(context).pop();
           },
           color: Color(0xFF1F2029),
         ),

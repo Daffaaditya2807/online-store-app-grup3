@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:online_app_final_project/component/list_colour.dart';
 import 'package:online_app_final_project/page/dashboard.dart';
 import 'package:online_app_final_project/page/favorite_product.dart';
 import 'package:online_app_final_project/page/my_order.dart';
 import 'package:online_app_final_project/page/product_list.dart';
 import 'package:online_app_final_project/page/profile.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class NavigationBarBottom extends StatefulWidget {
   final int initialIndex;
@@ -75,7 +75,7 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-            color: const Color(0xff704F38),
+            color: brownSecondary,
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.5),
@@ -95,9 +95,7 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
                 curve: Curves.ease,
                 decoration: ShapeDecoration(
                     shape: const CircleBorder(),
-                    color: pageSelected == 0
-                        ? Colors.white
-                        : const Color(0xff704F38)),
+                    color: pageSelected == 0 ? Colors.white : brownSecondary),
                 child: Padding(
                     padding: const EdgeInsets.all(3),
                     child: IconButton(
@@ -108,10 +106,9 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
                         });
                       },
                       icon: Icon(
-                        CupertinoIcons.home,
-                        color: pageSelected == 0
-                            ? const Color(0xff704F38)
-                            : Colors.white,
+                        CupertinoIcons.house_fill,
+                        color:
+                            pageSelected == 0 ? brownSecondary : Colors.white,
                         size: 30,
                       ),
                     )),
@@ -121,9 +118,7 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
                 curve: Curves.ease,
                 decoration: ShapeDecoration(
                     shape: const CircleBorder(),
-                    color: pageSelected == 1
-                        ? Colors.white
-                        : const Color(0xff704F38)),
+                    color: pageSelected == 1 ? Colors.white : brownSecondary),
                 child: Padding(
                     padding: const EdgeInsets.all(3),
                     child: IconButton(
@@ -135,9 +130,8 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
                       },
                       icon: Icon(
                         CupertinoIcons.cart,
-                        color: pageSelected == 1
-                            ? const Color(0xff704F38)
-                            : Colors.white,
+                        color:
+                            pageSelected == 1 ? brownSecondary : Colors.white,
                         size: 30,
                       ),
                     )),
@@ -147,9 +141,7 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
                 curve: Curves.ease,
                 decoration: ShapeDecoration(
                     shape: const CircleBorder(),
-                    color: pageSelected == 2
-                        ? Colors.white
-                        : const Color(0xff704F38)),
+                    color: pageSelected == 2 ? Colors.white : brownSecondary),
                 child: Padding(
                     padding: const EdgeInsets.all(3),
                     child: IconButton(
@@ -161,9 +153,8 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
                       },
                       icon: Icon(
                         CupertinoIcons.heart,
-                        color: pageSelected == 2
-                            ? const Color(0xff704F38)
-                            : Colors.white,
+                        color:
+                            pageSelected == 2 ? brownSecondary : Colors.white,
                         size: 30,
                       ),
                     )),
@@ -173,9 +164,7 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
                 curve: Curves.ease,
                 decoration: ShapeDecoration(
                     shape: const CircleBorder(),
-                    color: pageSelected == 3
-                        ? Colors.white
-                        : const Color(0xff704F38)),
+                    color: pageSelected == 3 ? Colors.white : brownSecondary),
                 child: Padding(
                   padding: const EdgeInsets.all(3),
                   child: IconButton(
@@ -187,9 +176,8 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
                       },
                       icon: Icon(
                         CupertinoIcons.doc_text,
-                        color: pageSelected == 3
-                            ? Color(0xff704F38)
-                            : Colors.white,
+                        color:
+                            pageSelected == 3 ? brownSecondary : Colors.white,
                         size: 30,
                       )),
                 ),
@@ -199,9 +187,7 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
                 curve: Curves.ease,
                 decoration: ShapeDecoration(
                     shape: const CircleBorder(),
-                    color: pageSelected == 4
-                        ? Colors.white
-                        : const Color(0xff704F38)),
+                    color: pageSelected == 4 ? Colors.white : brownSecondary),
                 child: Padding(
                   padding: const EdgeInsets.all(3),
                   child: IconButton(
@@ -213,9 +199,8 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
                       },
                       icon: Icon(
                         CupertinoIcons.profile_circled,
-                        color: pageSelected == 4
-                            ? Color(0xff704F38)
-                            : Colors.white,
+                        color:
+                            pageSelected == 4 ? brownSecondary : Colors.white,
                         size: 30.0,
                       )),
                 ),

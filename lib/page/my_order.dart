@@ -21,6 +21,7 @@ class TransactionHistoryPage extends StatelessWidget {
               ListView.builder(
                 padding: EdgeInsets.all(16.0),
                 shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: 5, // Replace with the number of transactions
                 itemBuilder: (context, index) {
                   return TransactionCard();
