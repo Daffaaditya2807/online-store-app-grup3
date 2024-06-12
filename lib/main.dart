@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:online_app_final_project/page/detail_product.dart';
+import 'package:online_app_final_project/page/profile.dart';
+import 'package:online_app_final_project/page/profile_detail.dart';
 import 'package:online_app_final_project/page/splash_screen.dart';
 
 void main() {
