@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:online_app_final_project/component/button.dart';
 import 'package:online_app_final_project/component/list_colour.dart';
+import 'package:online_app_final_project/page/payments_methods.dart';
 
 class CartProduct extends StatefulWidget {
   @override
@@ -129,7 +130,14 @@ class _CartProductState extends State<CartProduct> {
                             padding: const EdgeInsets.only(top: 20, bottom: 5),
                             child: button(
                                 nameButton: "Confirm Checkout",
-                                onPress: () {},
+                                onPress: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            PaymentOptionsPage(),
+                                      ));
+                                },
                                 colorButton: brownSecondary,
                                 textColorButton: Colors.white),
                           )

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:online_app_final_project/component/list_colour.dart';
@@ -92,7 +93,7 @@ class _FavoritePageState extends State<FavoritePage> {
                     child: const Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Icon(
-                        Icons.payments_outlined,
+                        CupertinoIcons.creditcard,
                         color: Colors.white,
                       ),
                     ),
