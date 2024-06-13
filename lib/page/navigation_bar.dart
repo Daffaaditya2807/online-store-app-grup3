@@ -30,9 +30,6 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
       // Halaman Transaksi taruh bawah IMPORT
       TransactionHistoryPage(),
       // Halaman Profile taruh bawah IMPORT
-
-      // const Profile()
-
       const Profile()
     ];
   }
