@@ -5,11 +5,7 @@ import 'package:online_app_final_project/page/dashboard.dart';
 import 'package:online_app_final_project/page/favorite_product.dart';
 import 'package:online_app_final_project/page/my_order.dart';
 import 'package:online_app_final_project/page/product_list.dart';
-import 'package:online_app_final_project/page/profile.dart';
 import 'package:online_app_final_project/page/profile_page.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-
-
 
 class NavigationBarBottom extends StatefulWidget {
   final int initialIndex;
@@ -34,14 +30,10 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
       // Halaman Transaksi taruh bawah IMPORT
       TransactionHistoryPage(),
       // Halaman Profile taruh bawah IMPORT
-        body: Center(child: Text("Halaman Profile Soon!")),
-      ),
 
       // const Profile()
 
-      const ProfilePage()
-
-
+      const Profile()
     ];
   }
 

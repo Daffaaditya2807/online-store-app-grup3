@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:online_app_final_project/page/navigation_bar.dart';
-import 'package:online_app_final_project/page/profile.dart';
 
 class ProfileDetail extends StatefulWidget {
   const ProfileDetail({Key? key}) : super(key: key);
@@ -20,11 +19,9 @@ class _ProfileDetailState extends State<ProfileDetail> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_new_outlined),
           onPressed: () {
-
             Navigator.pop(
               context,
             );
-
           },
           color: Color(0xFF1F2029),
         ),
