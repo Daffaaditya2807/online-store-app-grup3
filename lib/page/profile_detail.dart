@@ -20,7 +20,11 @@ class _ProfileDetailState extends State<ProfileDetail> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_new_outlined),
           onPressed: () {
-            Navigator.of(context).pop();
+
+            Navigator.pop(
+              context,
+            );
+
           },
           color: Color(0xFF1F2029),
         ),
@@ -198,7 +202,7 @@ class _ProfileDetailState extends State<ProfileDetail> {
                     ),
                   ),
                 ),
-                SizedBox(height: 30),
+                SizedBox(height: 70),
               ],
             ),
           ),
