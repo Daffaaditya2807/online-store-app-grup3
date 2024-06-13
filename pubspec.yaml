@@ -39,6 +39,11 @@ dependencies:
   buttons_tabbar: ^1.3.10
   dotted_line: ^3.2.2
 
+  carousel_slider: ^4.0.0
+
+  dotted_line: ^3.2.2
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

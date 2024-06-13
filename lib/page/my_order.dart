@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'package:online_app_final_project/component/list_colour.dart';
+
 
 class TransactionHistoryPage extends StatelessWidget {
   @override
@@ -44,8 +46,10 @@ class TransactionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+
       color: Colors.white,
       margin: EdgeInsets.symmetric(vertical: 8.0),
+
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
       ),
@@ -55,6 +59,7 @@ class TransactionCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+
             _buildTimeAndStatus(),
             Divider(),
             SizedBox(height: 8.0),
