@@ -106,11 +106,11 @@ class _DetailProductState extends State<DetailProduct> {
                           style: GoogleFonts.montserrat(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: brownPrimary)),
+                              color: brownSecondary)),
                       Card(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15)),
-                        color: brownPrimary,
+                        color: brownSecondary,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 15, vertical: 10),
@@ -183,7 +183,9 @@ class _DetailProductState extends State<DetailProduct> {
                 child: button(
                     nameButton: "Add to Cart",
                     textColorButton: Colors.white,
-                    onPress: () {},
+                    onPress: () {
+                      _showAlertDialog(context);
+                    },
                     colorButton: brownSecondary)),
             const SizedBox(
               height: 20,
@@ -191,6 +193,68 @@ class _DetailProductState extends State<DetailProduct> {
           ],
         ),
       ),
+    );
+  }
+
+  void _showAlertDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          titlePadding: EdgeInsets.all(10.0),
+          title: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              IconButton(onPressed: () {}, icon: Icon(Icons.close)),
+              Align(
+                alignment: Alignment.center,
+                child: Image.asset(
+                  "assets/Icon.png",
+                  width: 100,
+                  height: 100,
+                ),
+              ),
+            ],
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Hurrayy :)',
+                style: GoogleFonts.montserrat(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                    color: brownSecondary),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Item addes successfully',
+                style: GoogleFonts.montserrat(
+                    fontSize: 14.0, color: brownSecondary),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                      minimumSize: Size.fromHeight(45),
+                      backgroundColor: brownSecondary,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10))),
+                  child: Text(
+                    "View My Cart",
+                    style: GoogleFonts.montserrat(color: Colors.white),
+                  )),
+            )
+          ],
+        );
+      },
     );
   }
 }
