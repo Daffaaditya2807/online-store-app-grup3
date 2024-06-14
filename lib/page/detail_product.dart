@@ -74,13 +74,13 @@ class _DetailProductState extends State<DetailProduct> {
                               onPressed: () {
                                 Get.back();
                               },
-                              icon: Icon(Icons.arrow_back))),
+                              icon: const Icon(Icons.arrow_back))),
                       Container(
                           decoration: const ShapeDecoration(
                               shape: CircleBorder(), color: Colors.white),
                           child: IconButton(
                               onPressed: () {},
-                              icon: Icon(Icons.favorite_border))),
+                              icon: const Icon(Icons.favorite_border))),
                     ],
                   ),
                 )
@@ -255,12 +255,12 @@ class _DetailProductState extends State<DetailProduct> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          titlePadding: EdgeInsets.all(10.0),
+          titlePadding: const EdgeInsets.all(10.0),
           title: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              IconButton(onPressed: () {}, icon: Icon(Icons.close)),
+              IconButton(onPressed: () {}, icon: const Icon(Icons.close)),
               Align(
                 alignment: Alignment.center,
                 child: Image.asset(
@@ -297,7 +297,7 @@ class _DetailProductState extends State<DetailProduct> {
               child: ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                      minimumSize: Size.fromHeight(45),
+                      minimumSize: const Size.fromHeight(45),
                       backgroundColor: brownSecondary,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10))),

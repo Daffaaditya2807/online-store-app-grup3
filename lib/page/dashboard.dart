@@ -97,12 +97,12 @@ class _DashboardPageState extends State<DashboardPage>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Image.asset(
                 'assets/logodashboard.png',
                 height: 80,
               ),
-              SizedBox(height: 1),
+              const SizedBox(height: 1),
               Row(
                 children: [
                   Expanded(
@@ -187,15 +187,15 @@ class _DashboardPageState extends State<DashboardPage>
                   )
                 ],
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               CarouselSlider(
                 options: CarouselOptions(
                   height: 150.0,
                   autoPlay: true,
                   enlargeCenterPage: true,
                   aspectRatio: 16 / 9,
-                  autoPlayInterval: Duration(seconds: 3),
-                  autoPlayAnimationDuration: Duration(milliseconds: 800),
+                  autoPlayInterval: const Duration(seconds: 3),
+                  autoPlayAnimationDuration: const Duration(milliseconds: 800),
                   autoPlayCurve: Curves.fastOutSlowIn,
                   pauseAutoPlayOnTouch: true,
                   viewportFraction: 0.8,
@@ -208,7 +208,7 @@ class _DashboardPageState extends State<DashboardPage>
                       return SingleChildScrollView(
                         child: Container(
                           width: MediaQuery.of(context).size.width,
-                          margin: EdgeInsets.symmetric(horizontal: 5.0),
+                          margin: const EdgeInsets.symmetric(horizontal: 5.0),
                           decoration: BoxDecoration(
                             color: Color(color),
                             borderRadius: BorderRadius.circular(10),
@@ -223,18 +223,18 @@ class _DashboardPageState extends State<DashboardPage>
                                 Text(
                                   'Get 50% off on your first purchase',
                                   style: GoogleFonts.montserrat(
-                                    textStyle: TextStyle(
+                                    textStyle: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w600,
                                       color: Colors.white,
                                     ),
                                   ),
                                 ),
-                                SizedBox(height: 10),
+                                const SizedBox(height: 10),
                                 Text(
                                   'Enjoy 50% off on your first order. Shop now!',
                                   style: GoogleFonts.montserrat(
-                                    textStyle: TextStyle(
+                                    textStyle: const TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w400,
                                       color: Colors.white,
@@ -281,6 +281,7 @@ class _DashboardPageState extends State<DashboardPage>
               Expanded(
                 child: TabBarView(
                   controller: _tabController,
+                  physics: const NeverScrollableScrollPhysics(),
                   children: <Widget>[
                     Obx(() {
                       if (_productAllController.isLoading.value) {

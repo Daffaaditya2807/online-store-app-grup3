@@ -4,7 +4,6 @@ import 'package:online_app_final_project/component/list_colour.dart';
 import 'package:online_app_final_project/page/dashboard.dart';
 import 'package:online_app_final_project/page/favorite_product.dart';
 import 'package:online_app_final_project/page/my_order.dart';
-import 'package:online_app_final_project/page/product_list.dart';
 import 'package:online_app_final_project/page/profile_page.dart';
 
 class NavigationBarBottom extends StatefulWidget {

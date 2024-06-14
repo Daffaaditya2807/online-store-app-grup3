@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "241981984767",
+    "project_id": "online-app-store-7558b",
+    "firebase_url": "https://online-app-store-7558b-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "storage_bucket": "online-app-store-7558b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:241981984767:android:ec8199569ec446117861ca",
+        "android_client_info": {
+          "package_name": "com.example.online_app_final_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDriepMxNSkHTo5ZoBZgCV-jsTnCq-6TxU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
