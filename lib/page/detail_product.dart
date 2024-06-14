@@ -1,17 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:online_app_final_project/api/api_product.dart';
 import 'package:online_app_final_project/component/button.dart';
 import 'package:online_app_final_project/component/card_list.dart';
 import 'package:online_app_final_project/component/list_colour.dart';
+import 'package:online_app_final_project/model/all_product.dart';
 
 class DetailProduct extends StatefulWidget {
-  const DetailProduct({super.key});
+  final ModelProductAll modelProductAll;
+  const DetailProduct({Key? key, required this.modelProductAll})
+      : super(key: key);
 
   @override
   State<DetailProduct> createState() => _DetailProductState();
 }
 
 class _DetailProductState extends State<DetailProduct> {
+  final ProductAllControllerByCategory _productAllControllerByCategory =
+      Get.put(ProductAllControllerByCategory());
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _productAllControllerByCategory.fetchProdukByCategoryDetail(
+          category: widget.modelProductAll.category);
+    });
+  }
+
+  IconData getLogoCategory(String category) {
+    if (category == 'jewelery') {
+      return MdiIcons.diamond;
+    } else if (category == "men's clothing") {
+      return MdiIcons.tshirtCrew;
+    } else if (category == "women's clothing") {
+      return MdiIcons.tshirtCrew;
+    } else {
+      return Icons.electric_bolt_rounded;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,10 +58,10 @@ class _DetailProductState extends State<DetailProduct> {
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: AssetImage("assets/brown_jacket.jpg"))),
+                          image: NetworkImage(widget.modelProductAll.image))),
                 ),
                 Positioned(
-                  top: 60,
+                  top: 20,
                   left: 10,
                   right: 10,
                   child: Row(
@@ -41,7 +72,7 @@ class _DetailProductState extends State<DetailProduct> {
                               shape: CircleBorder(), color: Colors.white),
                           child: IconButton(
                               onPressed: () {
-                                Navigator.of(context).pop();
+                                Get.back();
                               },
                               icon: Icon(Icons.arrow_back))),
                       Container(
@@ -67,10 +98,14 @@ class _DetailProductState extends State<DetailProduct> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Brown Jacket",
-                        style: GoogleFonts.montserrat(
-                            fontSize: 20, fontWeight: FontWeight.bold),
+                      SizedBox(
+                        width: 200,
+                        child: Text(
+                          widget.modelProductAll.tittle,
+                          maxLines: 2,
+                          style: GoogleFonts.montserrat(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
                       ),
                       const SizedBox(
                         height: 5,
@@ -78,8 +113,9 @@ class _DetailProductState extends State<DetailProduct> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          const Icon(Icons.accessibility_sharp),
-                          Text("Jacket",
+                          Icon(
+                              getLogoCategory(widget.modelProductAll.category)),
+                          Text(widget.modelProductAll.category,
                               style: GoogleFonts.montserrat(fontSize: 14)),
                         ],
                       ),
@@ -93,32 +129,35 @@ class _DetailProductState extends State<DetailProduct> {
                             Icons.star,
                             color: Colors.orange.shade400,
                           ),
-                          Text("1.2",
+                          Text(widget.modelProductAll.rate.rate,
                               style: GoogleFonts.montserrat(fontSize: 14)),
+                          Text("(${widget.modelProductAll.rate.count})",
+                              style: GoogleFonts.montserrat(fontSize: 10)),
                         ],
                       )
                     ],
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text("Rp. 20.000",
+                      Text("Rp. ${widget.modelProductAll.price} K",
                           style: GoogleFonts.montserrat(
-                              fontSize: 20,
+                              fontSize: 16,
                               fontWeight: FontWeight.bold,
                               color: brownSecondary)),
-                      Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
-                        color: brownSecondary,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 10),
-                          child: Text("Available 5",
-                              style: GoogleFonts.montserrat(
-                                  fontSize: 14, color: Colors.white)),
-                        ),
-                      )
+                      // Card(
+                      //   shape: RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.circular(15)),
+                      //   color: brownSecondary,
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.symmetric(
+                      //         horizontal: 15, vertical: 10),
+                      //     child: Text("Available 5",
+                      //         style: GoogleFonts.montserrat(
+                      //             fontSize: 12, color: Colors.white)),
+                      //   ),
+                      // )
                     ],
                   )
                 ],
@@ -141,8 +180,7 @@ class _DetailProductState extends State<DetailProduct> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Text(
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+              child: Text(widget.modelProductAll.desc,
                   textAlign: TextAlign.justify,
                   style: GoogleFonts.montserrat(
                       fontSize: 12, color: Colors.black)),
@@ -160,20 +198,36 @@ class _DetailProductState extends State<DetailProduct> {
             ),
             SizedBox(
               height: 180,
-              child: ListView.builder(
-                itemCount: 5,
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: cardDetailProduct(
-                        asset: "assets/background.png",
-                        item: "Brown Jacket",
-                        harga: "Rp. 50.000"),
+              child: Obx(() {
+                if (_productAllControllerByCategory.isLoading.value) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
                   );
-                },
-              ),
+                } else {
+                  return ListView.builder(
+                    itemCount: _productAllControllerByCategory
+                        .productListDetail.length,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      var products = _productAllControllerByCategory
+                          .productListDetail[index];
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell(
+                          onTap: () {
+                            Get.to(DetailProduct(modelProductAll: products));
+                          },
+                          child: cardDetailProduct(
+                              asset: products.image,
+                              item: products.tittle,
+                              harga: "Rp. ${products.price} K"),
+                        ),
+                      );
+                    },
+                  );
+                }
+              }),
             ),
             const SizedBox(
               height: 15,

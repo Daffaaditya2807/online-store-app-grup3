@@ -1,7 +1,9 @@
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:online_app_final_project/api/api_product.dart';
 import 'package:online_app_final_project/component/card_list.dart';
 import 'package:online_app_final_project/component/list_colour.dart';
 import 'package:online_app_final_project/component/text_field.dart';
@@ -16,36 +18,82 @@ class DashboardPage extends StatefulWidget {
   State<DashboardPage> createState() => _DashboardPageState();
 }
 
-class _DashboardPageState extends State<DashboardPage> {
+class _DashboardPageState extends State<DashboardPage>
+    with SingleTickerProviderStateMixin {
   final TextEditingController _controllerSearch = TextEditingController();
+  final ProductAllController _productAllController =
+      Get.put(ProductAllController());
+
+  final ProductAllControllerByCategory _productAllControllerByCategory =
+      Get.put(ProductAllControllerByCategory());
+  TabController? _tabController;
 
   List<Tab> categoryProduct = [
     const Tab(
       text: "All",
     ),
     const Tab(
-      text: "Jacket",
+      text: "electronics",
     ),
     const Tab(
-      text: "Shirt",
+      text: "jewelery",
     ),
     const Tab(
-      text: "Men",
+      text: "men's clothing",
     ),
     const Tab(
-      text: "Kids",
-    ),
-    const Tab(
-      text: "Women",
+      text: "women's clothing",
     ),
   ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _tabController = TabController(length: categoryProduct.length, vsync: this);
+    _tabController!.addListener(_handleTabSelection);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _tabController!.dispose();
+  }
+
+  void _handleTabSelection() {
+    if (_tabController!.indexIsChanging) {
+      switch (_tabController!.index) {
+        case 1:
+          _productAllControllerByCategory.fetchProdukByCategory(
+              category: "electronics");
+          break;
+        case 2:
+          _productAllControllerByCategory.fetchProdukByCategory(
+              category: "jewelery");
+          break;
+        case 3:
+          _productAllControllerByCategory.fetchProdukByCategory(
+              category: "men's clothing");
+          break;
+        case 4:
+          _productAllControllerByCategory.fetchProdukByCategory(
+              category: "women's clothing");
+          break;
+        default:
+          _productAllController.fetchProduk();
+          break;
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: DefaultTabController(
-          length: 6,
+          length: categoryProduct.length,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -61,8 +109,53 @@ class _DashboardPageState extends State<DashboardPage> {
                     child: textFieldSearch(
                         controller: _controllerSearch,
                         onSubmitted: (value) {
-                          // fungsi cari barang
-                          print(value);
+                          int indexTab = _tabController!.index;
+
+                          if (indexTab == 1) {
+                            if (value.isEmpty) {
+                              _productAllControllerByCategory
+                                  .fetchProdukByCategory(
+                                      category: "electronics");
+                            } else {
+                              _productAllControllerByCategory
+                                  .searchProductsByCategory(
+                                      value, "electronics");
+                            }
+                          } else if (indexTab == 2) {
+                            if (value.isEmpty) {
+                              _productAllControllerByCategory
+                                  .fetchProdukByCategory(category: "jewelery");
+                            } else {
+                              _productAllControllerByCategory
+                                  .searchProductsByCategory(value, "jewelery");
+                            }
+                          } else if (indexTab == 3) {
+                            if (value.isEmpty) {
+                              _productAllControllerByCategory
+                                  .fetchProdukByCategory(
+                                      category: "men's clothing");
+                            } else {
+                              _productAllControllerByCategory
+                                  .searchProductsByCategory(
+                                      value, "men's clothing");
+                            }
+                          } else if (indexTab == 4) {
+                            if (value.isEmpty) {
+                              _productAllControllerByCategory
+                                  .fetchProdukByCategory(
+                                      category: "women's clothing");
+                            } else {
+                              _productAllControllerByCategory
+                                  .searchProductsByCategory(
+                                      value, "women's clothing");
+                            }
+                          } else {
+                            if (value.isEmpty) {
+                              _productAllController.fetchProduk();
+                            } else {
+                              _productAllController.searchProducts(value);
+                            }
+                          }
                         },
                         hintText: "Explore Your Our Products!"),
                   ),
@@ -169,14 +262,16 @@ class _DashboardPageState extends State<DashboardPage> {
               ),
               ButtonsTabBar(
                 radius: 15,
+                controller: _tabController,
                 contentPadding: const EdgeInsets.symmetric(horizontal: 25),
                 unselectedBorderColor: greyPrimary.withAlpha(40),
                 borderWidth: 1,
                 unselectedBackgroundColor: Colors.transparent,
                 borderColor: Colors.transparent,
                 decoration: BoxDecoration(color: brownSecondary),
-                unselectedLabelStyle: const TextStyle(color: Colors.black),
-                labelStyle: const TextStyle(color: Colors.white),
+                unselectedLabelStyle:
+                    GoogleFonts.montserrat(color: Colors.black),
+                labelStyle: GoogleFonts.montserrat(color: Colors.white),
                 height: 50,
                 tabs: categoryProduct,
               ),
@@ -185,51 +280,246 @@ class _DashboardPageState extends State<DashboardPage> {
               ),
               Expanded(
                 child: TabBarView(
+                  controller: _tabController,
                   children: <Widget>[
-                    GridView.builder(
-                      padding: const EdgeInsets.only(bottom: 100),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              mainAxisSpacing: 5.0,
-                              crossAxisSpacing: 5.0,
-                              childAspectRatio: 0.9,
-                              crossAxisCount: 2),
-                      itemCount: 10,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          onTap: () {
-                            PersistentNavBarNavigator.pushNewScreen(
-                              context,
-                              screen: DetailProduct(),
-                              withNavBar:
-                                  false, // OPTIONAL VALUE. True by default.
-                              pageTransitionAnimation:
-                                  PageTransitionAnimation.cupertino,
-                            );
-                          },
-                          child: cardProduct(
-                              asset: "assets/brown_jacket.jpg",
-                              item: "Brown Jacket",
-                              rate: "1.2",
-                              harga: "Rp. 50.000"),
+                    Obx(() {
+                      if (_productAllController.isLoading.value) {
+                        return Center(
+                          child: CircularProgressIndicator(
+                            color: brownPrimary,
+                          ),
                         );
-                      },
-                    ),
-                    const Center(
-                      child: Text("Available Soon!"),
-                    ),
-                    const Center(
-                      child: Text("Available Soon!"),
-                    ),
-                    const Center(
-                      child: Text("Available Soon!"),
-                    ),
-                    const Center(
-                      child: Text("Available Soon!"),
-                    ),
-                    const Center(
-                      child: Text("Available Soon!"),
-                    ),
+                      } else {
+                        return _productAllController.productList.isEmpty
+                            ? Center(
+                                child: Text(
+                                "Item Not Found!",
+                                style: GoogleFonts.montserrat(fontSize: 14),
+                              ))
+                            : GridView.builder(
+                                padding: const EdgeInsets.only(bottom: 100),
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        mainAxisSpacing: 5.0,
+                                        crossAxisSpacing: 5.0,
+                                        childAspectRatio: 0.9,
+                                        crossAxisCount: 2),
+                                itemCount:
+                                    _productAllController.productList.length,
+                                itemBuilder: (context, index) {
+                                  var products =
+                                      _productAllController.productList[index];
+                                  print("products all : ${products.tittle}");
+                                  return InkWell(
+                                    onTap: () {
+                                      PersistentNavBarNavigator.pushNewScreen(
+                                        context,
+                                        screen: DetailProduct(
+                                          modelProductAll: products,
+                                        ),
+                                        withNavBar:
+                                            false, // OPTIONAL VALUE. True by default.
+                                        pageTransitionAnimation:
+                                            PageTransitionAnimation.cupertino,
+                                      );
+                                    },
+                                    child: cardProduct(
+                                        asset: products.image,
+                                        item: products.tittle,
+                                        rate: products.rate.rate,
+                                        harga: "Rp. ${products.price} K"),
+                                  );
+                                },
+                              );
+                      }
+                    }),
+                    Obx(() {
+                      if (_productAllControllerByCategory.isLoading.value) {
+                        return Center(
+                          child: CircularProgressIndicator(color: brownPrimary),
+                        );
+                      } else {
+                        return _productAllControllerByCategory
+                                .productList.isEmpty
+                            ? Center(
+                                child: Text(
+                                "Item Not Found!",
+                                style: GoogleFonts.montserrat(fontSize: 14),
+                              ))
+                            : GridView.builder(
+                                padding: const EdgeInsets.only(bottom: 100),
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        mainAxisSpacing: 5.0,
+                                        crossAxisSpacing: 5.0,
+                                        childAspectRatio: 0.9,
+                                        crossAxisCount: 2),
+                                itemCount: _productAllControllerByCategory
+                                    .productList.length,
+                                itemBuilder: (context, index) {
+                                  var products = _productAllControllerByCategory
+                                      .productList[index];
+                                  print(
+                                      "products elektronik : ${products.tittle}");
+                                  return InkWell(
+                                    onTap: () {
+                                      Get.to(DetailProduct(
+                                          modelProductAll: products));
+                                    },
+                                    child: cardProduct(
+                                        asset: products.image,
+                                        item: products.tittle,
+                                        rate: products.rate.rate,
+                                        harga: "Rp. ${products.price} K"),
+                                  );
+                                },
+                              );
+                      }
+                    }),
+                    Obx(() {
+                      if (_productAllControllerByCategory.isLoading.value) {
+                        return Center(
+                          child: CircularProgressIndicator(color: brownPrimary),
+                        );
+                      } else {
+                        return _productAllControllerByCategory
+                                .productList.isEmpty
+                            ? Center(
+                                child: Text(
+                                "Item Not Found!",
+                                style: GoogleFonts.montserrat(fontSize: 14),
+                              ))
+                            : GridView.builder(
+                                padding: const EdgeInsets.only(bottom: 100),
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        mainAxisSpacing: 5.0,
+                                        crossAxisSpacing: 5.0,
+                                        childAspectRatio: 0.9,
+                                        crossAxisCount: 2),
+                                itemCount: _productAllControllerByCategory
+                                    .productList.length,
+                                itemBuilder: (context, index) {
+                                  var products = _productAllControllerByCategory
+                                      .productList[index];
+                                  return InkWell(
+                                    onTap: () {
+                                      PersistentNavBarNavigator.pushNewScreen(
+                                        context,
+                                        screen: DetailProduct(
+                                            modelProductAll: products),
+                                        withNavBar:
+                                            false, // OPTIONAL VALUE. True by default.
+                                        pageTransitionAnimation:
+                                            PageTransitionAnimation.cupertino,
+                                      );
+                                    },
+                                    child: cardProduct(
+                                        asset: products.image,
+                                        item: products.tittle,
+                                        rate: products.rate.rate,
+                                        harga: "Rp. ${products.price} K"),
+                                  );
+                                },
+                              );
+                      }
+                    }),
+                    Obx(() {
+                      if (_productAllControllerByCategory.isLoading.value) {
+                        return Center(
+                          child: CircularProgressIndicator(color: brownPrimary),
+                        );
+                      } else {
+                        return _productAllControllerByCategory
+                                .productList.isEmpty
+                            ? Center(
+                                child: Text(
+                                "Item Not Found!",
+                                style: GoogleFonts.montserrat(fontSize: 14),
+                              ))
+                            : GridView.builder(
+                                padding: const EdgeInsets.only(bottom: 100),
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        mainAxisSpacing: 5.0,
+                                        crossAxisSpacing: 5.0,
+                                        childAspectRatio: 0.9,
+                                        crossAxisCount: 2),
+                                itemCount: _productAllControllerByCategory
+                                    .productList.length,
+                                itemBuilder: (context, index) {
+                                  var products = _productAllControllerByCategory
+                                      .productList[index];
+                                  return InkWell(
+                                    onTap: () {
+                                      PersistentNavBarNavigator.pushNewScreen(
+                                        context,
+                                        screen: DetailProduct(
+                                            modelProductAll: products),
+                                        withNavBar:
+                                            false, // OPTIONAL VALUE. True by default.
+                                        pageTransitionAnimation:
+                                            PageTransitionAnimation.cupertino,
+                                      );
+                                    },
+                                    child: cardProduct(
+                                        asset: products.image,
+                                        item: products.tittle,
+                                        rate: products.rate.rate,
+                                        harga: "Rp. ${products.price} K"),
+                                  );
+                                },
+                              );
+                      }
+                    }),
+                    Obx(() {
+                      if (_productAllControllerByCategory.isLoading.value) {
+                        return Center(
+                          child: CircularProgressIndicator(color: brownPrimary),
+                        );
+                      } else {
+                        return _productAllControllerByCategory
+                                .productList.isEmpty
+                            ? Center(
+                                child: Text(
+                                "Item Not Found!",
+                                style: GoogleFonts.montserrat(fontSize: 14),
+                              ))
+                            : GridView.builder(
+                                padding: const EdgeInsets.only(bottom: 100),
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        mainAxisSpacing: 5.0,
+                                        crossAxisSpacing: 5.0,
+                                        childAspectRatio: 0.9,
+                                        crossAxisCount: 2),
+                                itemCount: _productAllControllerByCategory
+                                    .productList.length,
+                                itemBuilder: (context, index) {
+                                  var products = _productAllControllerByCategory
+                                      .productList[index];
+                                  return InkWell(
+                                    onTap: () {
+                                      PersistentNavBarNavigator.pushNewScreen(
+                                        context,
+                                        screen: DetailProduct(
+                                            modelProductAll: products),
+                                        withNavBar:
+                                            false, // OPTIONAL VALUE. True by default.
+                                        pageTransitionAnimation:
+                                            PageTransitionAnimation.cupertino,
+                                      );
+                                    },
+                                    child: cardProduct(
+                                        asset: products.image,
+                                        item: products.tittle,
+                                        rate: products.rate.rate,
+                                        harga: "Rp. ${products.price} K"),
+                                  );
+                                },
+                              );
+                      }
+                    }),
                   ],
                 ),
               ),

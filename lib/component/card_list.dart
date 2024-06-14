@@ -18,7 +18,7 @@ Container cardProduct(
             decoration: BoxDecoration(
                 color: greyLight,
                 image: DecorationImage(
-                    fit: BoxFit.cover, image: AssetImage("$asset")),
+                    fit: BoxFit.cover, image: NetworkImage("$asset")),
                 borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10))),
@@ -29,10 +29,15 @@ Container cardProduct(
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                item!,
-                style: GoogleFonts.montserrat(
-                    fontWeight: FontWeight.bold, fontSize: 14),
+              SizedBox(
+                width: 80,
+                child: Text(
+                  item!,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.bold, fontSize: 14),
+                ),
               ),
               Row(
                 children: [
@@ -69,7 +74,7 @@ Container cardDetailProduct({String? asset, String? item, String? harga}) {
             decoration: BoxDecoration(
                 color: Colors.blue,
                 image: DecorationImage(
-                    fit: BoxFit.cover, image: AssetImage("$asset")),
+                    fit: BoxFit.cover, image: NetworkImage("$asset")),
                 borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10))),
@@ -80,10 +85,14 @@ Container cardDetailProduct({String? asset, String? item, String? harga}) {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                item!,
-                style: GoogleFonts.montserrat(
-                    fontWeight: FontWeight.bold, fontSize: 14),
+              SizedBox(
+                width: 100,
+                child: Text(
+                  item!,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.bold, fontSize: 14),
+                ),
               ),
             ],
           ),
