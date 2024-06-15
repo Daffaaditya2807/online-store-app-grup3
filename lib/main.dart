@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:online_app_final_project/firebase_options.dart';
+import 'package:online_app_final_project/page/checkout.dart';
+import 'package:online_app_final_project/page/done_checkout.dart';
 import 'package:online_app_final_project/page/splash_screen.dart';
 
 void main() async {

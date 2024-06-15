@@ -3,7 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:online_app_final_project/api/api_product.dart';
+import 'package:online_app_final_project/controller/api_product.dart';
 import 'package:online_app_final_project/component/card_list.dart';
 import 'package:online_app_final_project/component/list_colour.dart';
 import 'package:online_app_final_project/component/text_field.dart';
@@ -364,8 +364,16 @@ class _DashboardPageState extends State<DashboardPage>
                                       "products elektronik : ${products.tittle}");
                                   return InkWell(
                                     onTap: () {
-                                      Get.to(DetailProduct(
-                                          modelProductAll: products));
+                                      PersistentNavBarNavigator.pushNewScreen(
+                                        context,
+                                        screen: DetailProduct(
+                                          modelProductAll: products,
+                                        ),
+                                        withNavBar:
+                                            false, // OPTIONAL VALUE. True by default.
+                                        pageTransitionAnimation:
+                                            PageTransitionAnimation.cupertino,
+                                      );
                                     },
                                     child: cardProduct(
                                         asset: products.image,

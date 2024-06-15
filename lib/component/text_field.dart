@@ -25,3 +25,70 @@ TextField textFieldSearch(
             borderSide: BorderSide(color: greyPrimary.withAlpha(40)))),
   );
 }
+
+Widget textfield(
+    {TextEditingController? controller,
+    String? hintText,
+    String? label,
+    Function(String)? onSubmitted}) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        label!,
+        style: GoogleFonts.montserrat(fontSize: 14),
+      ),
+      TextField(
+        cursorColor: brownSecondary,
+        controller: controller,
+        onSubmitted: onSubmitted,
+        decoration: InputDecoration(
+            hintText: hintText,
+            hintStyle: GoogleFonts.montserrat(),
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(color: greyPrimary.withAlpha(40))),
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(color: greyPrimary.withAlpha(40))),
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(color: greyPrimary.withAlpha(40)))),
+      ),
+    ],
+  );
+}
+
+Widget textfieldDesc(
+    {TextEditingController? controller,
+    String? hintText,
+    String? label,
+    Function(String)? onSubmitted}) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        label!,
+        style: GoogleFonts.montserrat(fontSize: 14),
+      ),
+      TextField(
+        cursorColor: brownSecondary,
+        controller: controller,
+        onSubmitted: onSubmitted,
+        maxLines: 3,
+        decoration: InputDecoration(
+            hintText: hintText,
+            hintStyle: GoogleFonts.montserrat(),
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(color: greyPrimary.withAlpha(40))),
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(color: greyPrimary.withAlpha(40))),
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(color: greyPrimary.withAlpha(40)))),
+      ),
+    ],
+  );
+}

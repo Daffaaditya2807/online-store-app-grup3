@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:online_app_final_project/component/list_colour.dart';
@@ -17,17 +18,20 @@ class TransactionDetailPage extends StatelessWidget {
             AppBar(
               leading: IconButton(
                 icon: Icon(Icons.arrow_back),
-                onPressed: () {},
+                onPressed: () {
+                  Get.back();
+                },
               ),
               backgroundColor: Colors.white,
+              centerTitle: true,
+              title: Text(
+                'E-Receipt',
+                style: GoogleFonts.montserrat(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600),
+              ),
               elevation: 0,
-            ),
-            Text(
-              'E-Receipt',
-              style: GoogleFonts.montserrat(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600),
             ),
           ],
         ),

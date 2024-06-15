@@ -1,8 +1,11 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:online_app_final_project/component/button.dart';
 import 'package:online_app_final_project/component/list_colour.dart';
+import 'package:online_app_final_project/controller/cart_controller.dart';
+import 'package:online_app_final_project/database/db_model_cart_item.dart';
 import 'package:online_app_final_project/page/payments_methods.dart';
 
 class CartProduct extends StatefulWidget {
@@ -11,6 +14,14 @@ class CartProduct extends StatefulWidget {
 }
 
 class _CartProductState extends State<CartProduct> {
+  final cartController = Get.put(CartController());
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    cartController.loadCartItems();
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -30,14 +41,15 @@ class _CartProductState extends State<CartProduct> {
               const SizedBox(
                 height: 10,
               ),
-              ListView.builder(
-                itemCount: 3,
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return listCart();
-                },
-              ),
+              Obx(() => ListView.builder(
+                    itemCount: cartController.cartItems.length,
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      final item = cartController.cartItems[index];
+                      return listCart(item);
+                    },
+                  )),
               const SizedBox(
                 height: 80,
               )
@@ -65,9 +77,8 @@ class _CartProductState extends State<CartProduct> {
                       padding: const EdgeInsets.all(20),
                       child: Wrap(
                         children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 160),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 160),
                             child: Divider(
                               thickness: 3,
                             ),
@@ -81,7 +92,7 @@ class _CartProductState extends State<CartProduct> {
                                     style: GoogleFonts.montserrat(
                                       fontSize: 14,
                                     )),
-                                Text("Rp. 160.000",
+                                Text("Rp. ${cartController.totalPrice.value} K",
                                     style: GoogleFonts.montserrat(
                                       fontSize: 14,
                                     ))
@@ -97,7 +108,7 @@ class _CartProductState extends State<CartProduct> {
                                     style: GoogleFonts.montserrat(
                                       fontSize: 14,
                                     )),
-                                Text("Rp. 15.000",
+                                Text("Rp. 15 K",
                                     style: GoogleFonts.montserrat(
                                       fontSize: 14,
                                     ))
@@ -119,7 +130,8 @@ class _CartProductState extends State<CartProduct> {
                                     style: GoogleFonts.montserrat(
                                       fontSize: 14,
                                     )),
-                                Text("Rp. 175.000",
+                                Text(
+                                    "Rp. ${cartController.totalPrice.value + 15} K",
                                     style: GoogleFonts.montserrat(
                                       fontSize: 14,
                                     ))
@@ -155,7 +167,7 @@ class _CartProductState extends State<CartProduct> {
     );
   }
 
-  Widget listCart() {
+  Widget listCart(DbCartItemModel item) {
     return Column(
       children: [
         Padding(
@@ -170,6 +182,8 @@ class _CartProductState extends State<CartProduct> {
                     height: 85,
                     decoration: BoxDecoration(
                         color: greyLight,
+                        image: DecorationImage(
+                            image: NetworkImage(item.image), fit: BoxFit.cover),
                         borderRadius: BorderRadius.circular(10)),
                   ),
                   const SizedBox(
@@ -178,12 +192,16 @@ class _CartProductState extends State<CartProduct> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Brown Jacket",
-                        style: GoogleFonts.montserrat(fontSize: 16),
+                      SizedBox(
+                        width: 150,
+                        child: Text(
+                          item.title,
+                          maxLines: 3,
+                          style: GoogleFonts.montserrat(fontSize: 16),
+                        ),
                       ),
                       Text(
-                        "Rp. 20.000",
+                        item.price,
                         style: GoogleFonts.montserrat(
                             fontSize: 14, fontWeight: FontWeight.bold),
                       )
@@ -193,39 +211,45 @@ class _CartProductState extends State<CartProduct> {
               ),
               Row(
                 children: [
-                  Container(
-                    width: 30,
-                    height: 30,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: greyLight),
-                    child: Center(
-                        child: Text(
-                      "-",
-                      style: GoogleFonts.montserrat(
-                        fontSize: 16,
-                      ),
-                    )),
+                  InkWell(
+                    onTap: () => cartController.decrementCartItemById(item),
+                    child: Container(
+                      width: 30,
+                      height: 30,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: greyLight),
+                      child: Center(
+                          child: Text(
+                        "-",
+                        style: GoogleFonts.montserrat(
+                          fontSize: 16,
+                        ),
+                      )),
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: Text(
-                      "2",
+                      item.quantity.toString(),
                       style: GoogleFonts.montserrat(fontSize: 16),
                     ),
                   ),
-                  Container(
-                    width: 30,
-                    height: 30,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: brownSecondary),
-                    child: Center(
-                        child: Text(
-                      "+",
-                      style: GoogleFonts.montserrat(
-                          fontSize: 16, color: Colors.white),
-                    )),
+                  InkWell(
+                    onTap: () => cartController.incrementCartItemById(item),
+                    child: Container(
+                      width: 30,
+                      height: 30,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: brownSecondary),
+                      child: Center(
+                          child: Text(
+                        "+",
+                        style: GoogleFonts.montserrat(
+                            fontSize: 16, color: Colors.white),
+                      )),
+                    ),
                   ),
                 ],
               )

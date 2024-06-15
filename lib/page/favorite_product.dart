@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:online_app_final_project/component/list_colour.dart';
+import 'package:online_app_final_project/database/db_favorite.dart';
+import 'package:online_app_final_project/database/db_model_favorite.dart';
 
 class FavoritePage extends StatefulWidget {
   const FavoritePage({super.key});
@@ -11,6 +13,25 @@ class FavoritePage extends StatefulWidget {
 }
 
 class _FavoritePageState extends State<FavoritePage> {
+  List<DbFavoriteModel> favorites = [];
+
+  void loadFavorites() async {
+    favorites = await DatabaseHelperFavorite().getListFavItem();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadFavorites();
+  }
+
+  void deleteItem(String id) async {
+    await DatabaseHelperFavorite().deleteFavItem(id);
+    loadFavorites(); // Refresh the list after deleting the item
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,13 +39,16 @@ class _FavoritePageState extends State<FavoritePage> {
           child: SingleChildScrollView(
         child: Column(
           children: [
+            const SizedBox(
+              height: 20,
+            ),
             Image.asset("assets/logodashboard.png"),
             ListView.builder(
-              itemCount: 10,
+              itemCount: favorites.length,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
-                return listCart();
+                return listCart(favorites[index]);
               },
             ),
             const SizedBox(
@@ -36,7 +60,7 @@ class _FavoritePageState extends State<FavoritePage> {
     );
   }
 
-  Widget listCart() {
+  Widget listCart(DbFavoriteModel item) {
     return Column(
       children: [
         Padding(
@@ -51,6 +75,8 @@ class _FavoritePageState extends State<FavoritePage> {
                     height: 85,
                     decoration: BoxDecoration(
                         color: greyLight,
+                        image: DecorationImage(
+                            image: NetworkImage(item.image), fit: BoxFit.cover),
                         borderRadius: BorderRadius.circular(10)),
                   ),
                   const SizedBox(
@@ -59,12 +85,16 @@ class _FavoritePageState extends State<FavoritePage> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Brown Jacket",
-                        style: GoogleFonts.montserrat(fontSize: 16),
+                      SizedBox(
+                        width: 150,
+                        child: Text(
+                          item.title,
+                          maxLines: 3,
+                          style: GoogleFonts.montserrat(fontSize: 16),
+                        ),
                       ),
                       Text(
-                        "Rp. 20.000",
+                        "Rp. ${item.price} K",
                         style: GoogleFonts.montserrat(
                             fontSize: 14, fontWeight: FontWeight.bold),
                       )
@@ -74,13 +104,16 @@ class _FavoritePageState extends State<FavoritePage> {
               ),
               Row(
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: greyLight),
-                    child: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Icon(Icons.delete),
+                  InkWell(
+                    onTap: () => deleteItem(item.id),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: greyLight),
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Icon(Icons.delete),
+                      ),
                     ),
                   ),
                   const SizedBox(

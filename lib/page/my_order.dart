@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:online_app_final_project/component/list_colour.dart';
+import 'package:online_app_final_project/page/e-receipt.dart';
 
 class TransactionHistoryPage extends StatelessWidget {
   @override
@@ -28,7 +30,12 @@ class TransactionHistoryPage extends StatelessWidget {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
-                  return TransactionCard();
+                  return InkWell(
+                      onTap: () {
+                        Get.to(TransactionDetailPage(),
+                            transition: Transition.rightToLeft);
+                      },
+                      child: TransactionCard());
                 },
               ),
               const SizedBox(

@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:online_app_final_project/api/api_product.dart';
+import 'package:online_app_final_project/controller/api_product.dart';
 import 'package:online_app_final_project/component/button.dart';
 import 'package:online_app_final_project/component/card_list.dart';
 import 'package:online_app_final_project/component/list_colour.dart';
+import 'package:online_app_final_project/database/db_favorite.dart';
+import 'package:online_app_final_project/database/db_model_cart_item.dart';
+import 'package:online_app_final_project/database/db_model_favorite.dart';
 import 'package:online_app_final_project/model/all_product.dart';
 
 class DetailProduct extends StatefulWidget {
@@ -20,6 +23,25 @@ class DetailProduct extends StatefulWidget {
 class _DetailProductState extends State<DetailProduct> {
   final ProductAllControllerByCategory _productAllControllerByCategory =
       Get.put(ProductAllControllerByCategory());
+  bool isFav = false;
+
+  void checkFavoriteStatus() async {
+    isFav = await DatabaseHelperFavorite()
+        .isFavorite(widget.modelProductAll.id.toString());
+    setState(() {});
+  }
+
+  void toggleFavorite() async {
+    if (isFav) {
+      await DatabaseHelperFavorite()
+          .deleteFavItem(widget.modelProductAll.id.toString());
+    } else {
+      await DatabaseHelperFavorite().insertFavoriteItem(
+          DbFavoriteModel.fromProductAll(widget.modelProductAll));
+    }
+    isFav = !isFav;
+    setState(() {});
+  }
 
   @override
   void initState() {
@@ -29,6 +51,7 @@ class _DetailProductState extends State<DetailProduct> {
       _productAllControllerByCategory.fetchProdukByCategoryDetail(
           category: widget.modelProductAll.category);
     });
+    checkFavoriteStatus();
   }
 
   IconData getLogoCategory(String category) {
@@ -61,7 +84,7 @@ class _DetailProductState extends State<DetailProduct> {
                           image: NetworkImage(widget.modelProductAll.image))),
                 ),
                 Positioned(
-                  top: 20,
+                  top: 40,
                   left: 10,
                   right: 10,
                   child: Row(
@@ -79,8 +102,11 @@ class _DetailProductState extends State<DetailProduct> {
                           decoration: const ShapeDecoration(
                               shape: CircleBorder(), color: Colors.white),
                           child: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.favorite_border))),
+                            onPressed: toggleFavorite,
+                            icon: Icon(
+                                isFav ? Icons.favorite : Icons.favorite_border,
+                                color: isFav ? Colors.red : null),
+                          )),
                     ],
                   ),
                 )
@@ -237,7 +263,19 @@ class _DetailProductState extends State<DetailProduct> {
                 child: button(
                     nameButton: "Add to Cartssssss",
                     textColorButton: Colors.white,
-                    onPress: () {
+                    onPress: () async {
+                      DbCartItemModel itemModel = DbCartItemModel(
+                          quantity: 1,
+                          id: widget.modelProductAll.id,
+                          title: widget.modelProductAll.tittle,
+                          desc: widget.modelProductAll.desc,
+                          price: widget.modelProductAll.price,
+                          category: widget.modelProductAll.category,
+                          image: widget.modelProductAll.image,
+                          rate: widget.modelProductAll.rate.rate,
+                          count: widget.modelProductAll.rate.count);
+                      await DatabaseHelperFavorite()
+                          .insertOrUpdateCartItem(itemModel);
                       _showAlertDialog(context);
                     },
                     colorButton: brownSecondary)),
