@@ -1,5 +1,4 @@
 import 'package:dotted_line/dotted_line.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,6 +9,7 @@ import 'package:online_app_final_project/controller/cart_controller.dart';
 import 'package:online_app_final_project/database/db_model_cart_item.dart';
 import 'package:online_app_final_project/page/done_checkout.dart';
 
+// ignore: must_be_immutable
 class CheckoutLast extends StatefulWidget {
   String payments;
   CheckoutLast({Key? key, required this.payments}) : super(key: key);
@@ -39,7 +39,7 @@ class _CheckoutLastState extends State<CheckoutLast> {
       ),
       body: SafeArea(
           child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,14 +101,10 @@ class _CheckoutLastState extends State<CheckoutLast> {
                     String uid = "3i3wEYEYMvVCz9X6V09RXF7eljz1";
                     DateTime tanggal = DateTime.now();
                     String metodeBayar = widget.payments;
-                    String idTransaksi =
-                        "TXN-${DateTime.now().millisecondsSinceEpoch}";
-
                     cartController.createRecordTransaction(
                         uid,
                         metodeBayar,
                         tanggal,
-                        idTransaksi,
                         _alamat.text,
                         _phone.text,
                         _nama.text,
@@ -206,7 +202,7 @@ class _CheckoutLastState extends State<CheckoutLast> {
               style: GoogleFonts.montserrat(fontSize: 12),
             ),
             Text(
-              'Rp. ${cartController.totalPrice + 15} K',
+              'Rp. ${cartController.totalPrice.value + 15} K',
               style: GoogleFonts.montserrat(
                   fontSize: 12, fontWeight: FontWeight.bold),
             ),

@@ -2,39 +2,45 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:dotted_line/dotted_line.dart';
+import 'package:intl/intl.dart';
 import 'package:online_app_final_project/component/list_colour.dart';
 import 'package:flutter/services.dart';
+import 'package:online_app_final_project/model/transaction_history.dart';
 
-class TransactionDetailPage extends StatelessWidget {
+class TransactionDetailPage extends StatefulWidget {
+  final HistoryTransaksiModel historyTransaksiModel;
+  const TransactionDetailPage({Key? key, required this.historyTransaksiModel})
+      : super(key: key);
+
+  @override
+  State<TransactionDetailPage> createState() => _TransactionDetailPageState();
+}
+
+class _TransactionDetailPageState extends State<TransactionDetailPage> {
   final String transactionId = '#TR2456DEDK';
 
   @override
   Widget build(BuildContext context) {
+    String dateTimeString = widget.historyTransaksiModel.tanggal.toString();
+    DateTime dateTime = DateTime.parse(dateTimeString);
+    String formattedDate = DateFormat('d MMMM y, h:mm a').format(dateTime);
+
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100.0),
-        child: Column(
-          children: [
-            AppBar(
-              leading: IconButton(
-                icon: Icon(Icons.arrow_back),
-                onPressed: () {
-                  Get.back();
-                },
-              ),
-              backgroundColor: Colors.white,
-              centerTitle: true,
-              title: Text(
-                'E-Receipt',
-                style: GoogleFonts.montserrat(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600),
-              ),
-              elevation: 0,
-            ),
-          ],
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Get.back();
+          },
         ),
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        title: Text(
+          'E-Receipt',
+          style: GoogleFonts.montserrat(
+              color: Colors.black, fontSize: 20, fontWeight: FontWeight.w600),
+        ),
+        elevation: 0,
       ),
       backgroundColor: Colors.white,
       body: Column(
@@ -57,8 +63,8 @@ class TransactionDetailPage extends StatelessWidget {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(8.0),
-                          child: Image.asset(
-                            'assets/brown_jacket.jpg',
+                          child: Image.network(
+                            widget.historyTransaksiModel.urlImage,
                             height: 80,
                             width: 80,
                             fit: BoxFit.cover,
@@ -70,7 +76,7 @@ class TransactionDetailPage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Brown Suite',
+                                widget.historyTransaksiModel.title,
                                 style: GoogleFonts.montserrat(
                                   color: Colors.black,
                                   fontSize: 18,
@@ -78,7 +84,7 @@ class TransactionDetailPage extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                'Size: XL || Qty: 10pcs',
+                                'Qty: ${widget.historyTransaksiModel.quantity}pcs',
                                 style: GoogleFonts.montserrat(
                                   color: Colors.grey,
                                   fontSize: 14,
@@ -86,7 +92,7 @@ class TransactionDetailPage extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                'Rp.10.000.000',
+                                'Rp. ${widget.historyTransaksiModel.hargaBarang} K',
                                 style: GoogleFonts.montserrat(
                                   color: Colors.black,
                                   fontSize: 16,
@@ -100,20 +106,23 @@ class TransactionDetailPage extends StatelessWidget {
                     ),
                     SizedBox(height: 15),
                     Divider(),
-                    buildTransactionDetailRow('Amount', 'Rp.10.000.000'),
-                    buildTransactionDetailRow('Delivery Charge', 'Rp.0'),
-                    buildTransactionDetailRow('Promo', '-Rp.500.000'),
+                    buildTransactionDetailRow('Amount',
+                        'Rp. ${widget.historyTransaksiModel.hargaTotal} K'),
+                    buildTransactionDetailRow('Delivery Charge', 'Rp.0 K'),
+                    buildTransactionDetailRow('Promo', '-Rp.0 K'),
                     SizedBox(height: 10),
                     DottedLine(dashColor: greyPrimary),
                     SizedBox(height: 10),
-                    buildTransactionDetailRow('Total', 'Rp.9.500.000'),
+                    buildTransactionDetailRow('Total',
+                        'Rp. ${widget.historyTransaksiModel.hargaTotal} K'),
                     SizedBox(height: 10),
                     Divider(),
-                    buildTransactionDetailRow('Payment Methods', 'Cash'),
-                    buildTransactionDetailRow('Date', '6 June 2024, 3:47 PM'),
+                    buildTransactionDetailRow('Payment Methods',
+                        '${widget.historyTransaksiModel.metodeBayar}'),
+                    buildTransactionDetailRow('Date', formattedDate),
                     buildTransactionDetailRowWithIcon(
-                      'Transaction ID',
-                      transactionId,
+                      'ID Trans',
+                      widget.historyTransaksiModel.idTransaksi,
                       Icons.copy,
                       20.0,
                       () {
@@ -213,26 +222,21 @@ class TransactionDetailPage extends StatelessWidget {
           topRight: Radius.circular(10),
         ),
       ),
-      padding: EdgeInsets.all(27.0),
-      child: Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
         child: ElevatedButton(
           onPressed: () {},
           style: ElevatedButton.styleFrom(
             backgroundColor: brownSecondary,
+            minimumSize: Size.fromHeight(50),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30.0),
             ),
           ),
-          child: Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 65.0, vertical: 10.0),
-            child: Text(
-              'Download E-Receipt',
-              style: GoogleFonts.montserrat(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white),
-            ),
+          child: Text(
+            'Download E-Receipt',
+            style: GoogleFonts.montserrat(
+                fontSize: 18, fontWeight: FontWeight.w500, color: Colors.white),
           ),
         ),
       ),

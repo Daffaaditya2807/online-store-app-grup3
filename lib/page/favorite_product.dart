@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:online_app_final_project/component/list_colour.dart';
 import 'package:online_app_final_project/database/db_favorite.dart';
 import 'package:online_app_final_project/database/db_model_favorite.dart';
+import 'package:online_app_final_project/model/all_product.dart';
+import 'package:online_app_final_project/page/detail_product.dart';
 
 class FavoritePage extends StatefulWidget {
   const FavoritePage({super.key});
@@ -48,7 +51,22 @@ class _FavoritePageState extends State<FavoritePage> {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
-                return listCart(favorites[index]);
+                var items = favorites[index];
+                RatingAllProduct rate =
+                    RatingAllProduct(rate: items.rate, count: items.count);
+                ModelProductAll productAll = ModelProductAll(
+                    id: items.id,
+                    tittle: items.title,
+                    price: items.price,
+                    desc: items.desc,
+                    category: items.category,
+                    image: items.image,
+                    rate: rate);
+                return InkWell(
+                    onTap: () {
+                      Get.to(DetailProduct(modelProductAll: productAll));
+                    },
+                    child: listCart(favorites[index]));
               },
             ),
             const SizedBox(
@@ -118,18 +136,6 @@ class _FavoritePageState extends State<FavoritePage> {
                   ),
                   const SizedBox(
                     width: 10,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: brownSecondary),
-                    child: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Icon(
-                        CupertinoIcons.creditcard,
-                        color: Colors.white,
-                      ),
-                    ),
                   ),
                 ],
               )

@@ -1,15 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:online_app_final_project/page/navigation_bar.dart';
+import 'package:online_app_final_project/controller/profile_controller.dart';
+import 'package:online_app_final_project/model/profile.dart';
 
 class ProfileDetail extends StatefulWidget {
-  const ProfileDetail({Key? key}) : super(key: key);
+  final ProfileModel profileModel;
+  const ProfileDetail({Key? key, required this.profileModel}) : super(key: key);
 
   @override
   State<ProfileDetail> createState() => _ProfileDetailState();
 }
 
 class _ProfileDetailState extends State<ProfileDetail> {
+  TextEditingController? _nama;
+  TextEditingController? _phone;
+  TextEditingController? _email;
+  final ProfileController profileController = Get.put(ProfileController());
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _nama = TextEditingController(text: widget.profileModel.name);
+    _phone = TextEditingController(text: widget.profileModel.phone);
+    _email = TextEditingController(text: widget.profileModel.email);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _nama!.dispose();
+    _phone!.dispose();
+    _email!.dispose();
+  }
+
+  void navigateIfMounted() {
+    if (mounted) {
+      Navigator.of(context).pop();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,13 +49,13 @@ class _ProfileDetailState extends State<ProfileDetail> {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_outlined),
+          icon: const Icon(Icons.arrow_back_ios_new_outlined),
           onPressed: () {
             Navigator.pop(
               context,
             );
           },
-          color: Color(0xFF1F2029),
+          color: const Color(0xFF1F2029),
         ),
       ),
       body: SafeArea(
@@ -41,13 +73,13 @@ class _ProfileDetailState extends State<ProfileDetail> {
                     style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.w500,
                       fontSize: 22,
-                      color: Color(0xFF1F2029),
+                      color: const Color(0xFF1F2029),
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  margin: const EdgeInsets.symmetric(horizontal: 20),
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
@@ -56,37 +88,24 @@ class _ProfileDetailState extends State<ProfileDetail> {
                       style: GoogleFonts.montserrat(
                         fontWeight: FontWeight.w500,
                         fontSize: 12,
-                        color: Color.fromRGBO(121, 121, 121, 1),
+                        color: const Color.fromRGBO(121, 121, 121, 1),
                       ),
                     ),
                   ),
                 ),
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
                 Container(
                   alignment: Alignment.center,
                   child: const Stack(
                     children: [
                       CircleAvatar(
                         radius: 80,
-                        backgroundImage: AssetImage('assets/profile.jpg'),
-                      ),
-                      Positioned(
-                        bottom: 10,
-                        right: 10,
-                        child: CircleAvatar(
-                          radius: 15,
-                          backgroundColor: Colors.white,
-                          child: Icon(
-                            Icons.edit,
-                            color: Colors.black,
-                            size: 18,
-                          ),
-                        ),
+                        backgroundImage: AssetImage('assets/user.png'),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 45.0),
                   child: Container(
@@ -95,16 +114,17 @@ class _ProfileDetailState extends State<ProfileDetail> {
                       style: GoogleFonts.montserrat(
                         fontWeight: FontWeight.w500,
                         fontSize: 18,
-                        color: Color(0xFF1F2029),
+                        color: const Color(0xFF1F2029),
                       ),
                     ),
                   ),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 40.0),
                   child: Container(
                     child: TextField(
+                      controller: _nama,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25),
@@ -114,7 +134,7 @@ class _ProfileDetailState extends State<ProfileDetail> {
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 45.0),
                   child: Container(
@@ -123,16 +143,17 @@ class _ProfileDetailState extends State<ProfileDetail> {
                       style: GoogleFonts.montserrat(
                         fontWeight: FontWeight.w500,
                         fontSize: 18,
-                        color: Color(0xFF1F2029),
+                        color: const Color(0xFF1F2029),
                       ),
                     ),
                   ),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 40.0),
                   child: Container(
                     child: TextField(
+                      controller: _phone,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25),
@@ -142,7 +163,7 @@ class _ProfileDetailState extends State<ProfileDetail> {
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 45.0),
                   child: Container(
@@ -151,16 +172,18 @@ class _ProfileDetailState extends State<ProfileDetail> {
                       style: GoogleFonts.montserrat(
                         fontWeight: FontWeight.w500,
                         fontSize: 18,
-                        color: Color(0xFF1F2029),
+                        color: const Color(0xFF1F2029),
                       ),
                     ),
                   ),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 40.0),
                   child: Container(
                     child: TextField(
+                      controller: _email,
+                      readOnly: true,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25),
@@ -170,28 +193,33 @@ class _ProfileDetailState extends State<ProfileDetail> {
                     ),
                   ),
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 90),
+                  padding: const EdgeInsets.symmetric(horizontal: 40),
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => NavigationBarBottom(
-                                  initialIndex: 4,
-                                )),
-                      );
+                      if (_nama!.text.isEmpty ||
+                          _email!.text.isEmpty ||
+                          _phone!.text.isEmpty) {
+                      } else {
+                        profileController.updateProfileByUid(
+                            widget.profileModel.uid,
+                            _nama!.text,
+                            _phone!.text,
+                            _email!.text,
+                            context,
+                            navigateIfMounted);
+                      }
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromRGBO(112, 79, 56, 1),
-                      minimumSize: Size(309, 44),
+                      backgroundColor: const Color.fromRGBO(112, 79, 56, 1),
+                      minimumSize: const Size.fromHeight(55),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25),
                       ),
                     ),
                     child: Text(
-                      "Complete",
+                      "Update Profile",
                       style: GoogleFonts.montserrat(
                           fontWeight: FontWeight.w500,
                           fontSize: 18,
@@ -199,7 +227,7 @@ class _ProfileDetailState extends State<ProfileDetail> {
                     ),
                   ),
                 ),
-                SizedBox(height: 70),
+                const SizedBox(height: 70),
               ],
             ),
           ),
