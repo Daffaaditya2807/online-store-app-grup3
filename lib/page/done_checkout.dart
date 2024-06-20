@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lottie/lottie.dart';
 import 'package:online_app_final_project/component/button.dart';
 import 'package:online_app_final_project/component/list_colour.dart';
 import 'package:online_app_final_project/page/navigation_bar.dart';

@@ -10,6 +10,7 @@ import 'package:online_app_final_project/database/db_favorite.dart';
 import 'package:online_app_final_project/database/db_model_cart_item.dart';
 import 'package:online_app_final_project/database/db_model_favorite.dart';
 import 'package:online_app_final_project/model/all_product.dart';
+import 'package:online_app_final_project/page/cart_product.dart';
 
 class DetailProduct extends StatefulWidget {
   final ModelProductAll modelProductAll;
@@ -261,7 +262,7 @@ class _DetailProductState extends State<DetailProduct> {
             Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: button(
-                    nameButton: "Add to Cartssssss",
+                    nameButton: "Add to Carts",
                     textColorButton: Colors.white,
                     onPress: () async {
                       DbCartItemModel itemModel = DbCartItemModel(
@@ -298,7 +299,11 @@ class _DetailProductState extends State<DetailProduct> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              IconButton(onPressed: () {}, icon: const Icon(Icons.close)),
+              IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon: const Icon(Icons.close)),
               Align(
                 alignment: Alignment.center,
                 child: Image.asset(
@@ -333,7 +338,10 @@ class _DetailProductState extends State<DetailProduct> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Get.to(CartProduct());
+                  },
                   style: ElevatedButton.styleFrom(
                       minimumSize: const Size.fromHeight(45),
                       backgroundColor: brownSecondary,

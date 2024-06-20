@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,7 @@ import 'package:online_app_final_project/database/db_favorite.dart';
 class CartController extends GetxController {
   var cartItems = <DbCartItemModel>[].obs;
   var totalPrice = 0.0.obs;
+  var isSend = false.obs;
   late DatabaseReference dbRef;
   User? user;
 
@@ -60,13 +63,14 @@ class CartController extends GetxController {
       String uid,
       String metodebayar,
       DateTime tanggal,
-      String idTransaksi,
       String alamat,
       String phone,
       String nama,
       BuildContext context,
       Widget destination) {
     for (var item in cartItems) {
+      String idTransaksi =
+          "TXN-${DateTime.now().millisecondsSinceEpoch}-${Random().nextInt(1000)}";
       Map<String, dynamic> transaction = {
         'idTransaksi': idTransaksi,
         'uid': uid,
@@ -82,9 +86,11 @@ class CartController extends GetxController {
         'tanggal': tanggal.toString(),
         'status': 'diproses',
         'alamat': alamat,
-        'phone': phone
+        'phone': phone,
+        'urlImage': item.image
       };
 
+      isSend = true.obs;
       dbRef.push().set(transaction).then((value) {
         Navigator.pushReplacement(
             context,
@@ -92,6 +98,7 @@ class CartController extends GetxController {
               builder: (context) => destination,
             ));
       }).catchError((error) {
+        isSend = false.obs;
         print("Failed to add transaction: $error");
       });
     }

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:online_app_final_project/component/list_colour.dart';
-import 'package:online_app_final_project/controller/cart_controller.dart';
 import 'package:online_app_final_project/page/checkout.dart';
 
 class PaymentOptionsPage extends StatefulWidget {
@@ -33,7 +30,7 @@ class _PaymentOptionsPageState extends State<PaymentOptionsPage> {
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -50,9 +47,9 @@ class _PaymentOptionsPageState extends State<PaymentOptionsPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   _buildCreateDebitCard(),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   Text(
                     'More Payment Options',
                     style: GoogleFonts.montserrat(
@@ -60,11 +57,11 @@ class _PaymentOptionsPageState extends State<PaymentOptionsPage> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Container(
                     decoration: BoxDecoration(
-                      border:
-                          Border.all(color: Color.fromARGB(215, 215, 215, 215)),
+                      border: Border.all(
+                          color: const Color.fromARGB(215, 215, 215, 215)),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Column(
@@ -74,17 +71,23 @@ class _PaymentOptionsPageState extends State<PaymentOptionsPage> {
                           logo: 'assets/paypal.png',
                           value: 'Paypal',
                         ),
-                        Divider(),
+                        const Divider(),
                         _buildPaymentOption(
                           title: 'Apple Pay',
                           logo: 'assets/apple-pay.png',
                           value: 'Apple Pay',
                         ),
-                        Divider(),
+                        const Divider(),
                         _buildPaymentOption(
                           title: 'Google Pay',
                           logo: 'assets/google-pay.png',
                           value: 'Google Pay',
+                        ),
+                        const Divider(),
+                        _buildPaymentOption(
+                          title: 'Cash',
+                          logo: 'assets/google-pay.png',
+                          value: 'Cash',
                         ),
                       ],
                     ),
@@ -94,13 +97,16 @@ class _PaymentOptionsPageState extends State<PaymentOptionsPage> {
             ),
           ),
           _buildBottomButton(() {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CheckoutLast(
-                    payments: _selectedPaymentMethod,
-                  ),
-                ));
+            if (_selectedPaymentMethod.isEmpty) {
+            } else {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CheckoutLast(
+                      payments: _selectedPaymentMethod,
+                    ),
+                  ));
+            }
           }),
         ],
       ),
@@ -118,11 +124,12 @@ class _PaymentOptionsPageState extends State<PaymentOptionsPage> {
             fontWeight: FontWeight.w600,
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              border: Border.all(color: Color.fromARGB(215, 215, 215, 215))),
+              border:
+                  Border.all(color: const Color.fromARGB(215, 215, 215, 215))),
           child: ListTile(
             leading: Icon(Icons.credit_card, color: brownSecondary),
             title: Text(
@@ -145,7 +152,7 @@ class _PaymentOptionsPageState extends State<PaymentOptionsPage> {
     return Column(
       children: [
         Container(
-          margin: EdgeInsets.symmetric(
+          margin: const EdgeInsets.symmetric(
               vertical: 4), // margin between internal borders
           child: RadioListTile(
             activeColor: brownSecondary,
@@ -182,32 +189,29 @@ class _PaymentOptionsPageState extends State<PaymentOptionsPage> {
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
-          border: Border.all(color: Color.fromARGB(215, 215, 215, 215)),
-          borderRadius: BorderRadius.only(
+          border: Border.all(color: const Color.fromARGB(215, 215, 215, 215)),
+          borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(10),
             topRight: Radius.circular(10),
           ),
         ),
-        padding: EdgeInsets.all(27.0),
+        padding: const EdgeInsets.all(27.0),
         child: Center(
           child: ElevatedButton(
             onPressed: onPressed,
             style: ElevatedButton.styleFrom(
               backgroundColor: brownSecondary,
+              minimumSize: const Size.fromHeight(50),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30.0),
               ),
             ),
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 65.0, vertical: 10.0),
-              child: Text(
-                'Confirm Payment',
-                style: GoogleFonts.montserrat(
-                    fontSize: 20,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.white),
-              ),
+            child: Text(
+              'Confirm Payment',
+              style: GoogleFonts.montserrat(
+                  fontSize: 20,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.white),
             ),
           ),
         ),

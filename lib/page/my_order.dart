@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 import 'package:online_app_final_project/component/list_colour.dart';
+import 'package:online_app_final_project/controller/history_transaction.dart';
+import 'package:online_app_final_project/model/transaction_history.dart';
 import 'package:online_app_final_project/page/e-receipt.dart';
 
 class TransactionHistoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final HistoryTransaction transactionController =
+        Get.put(HistoryTransaction(), permanent: true);
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -24,20 +29,31 @@ class TransactionHistoryPage extends StatelessWidget {
                     fontSize: 20,
                     fontWeight: FontWeight.w600),
               ),
-              ListView.builder(
-                padding: EdgeInsets.all(16.0),
-                itemCount: 5,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return InkWell(
-                      onTap: () {
-                        Get.to(TransactionDetailPage(),
-                            transition: Transition.rightToLeft);
-                      },
-                      child: TransactionCard());
-                },
-              ),
+              Obx(() {
+                if (transactionController.historyTrans.isEmpty) {
+                  return Center(child: CircularProgressIndicator());
+                } else {
+                  return ListView.builder(
+                    padding: EdgeInsets.all(16.0),
+                    itemCount: transactionController.historyTrans.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      var itemsValues =
+                          transactionController.historyTrans[index];
+                      return InkWell(
+                          onTap: () {
+                            Get.to(
+                                TransactionDetailPage(
+                                  historyTransaksiModel: itemsValues,
+                                ),
+                                transition: Transition.rightToLeft);
+                          },
+                          child: TransactionCard(itemsValues));
+                    },
+                  );
+                }
+              }),
               const SizedBox(
                 height: 80,
               )
@@ -49,7 +65,7 @@ class TransactionHistoryPage extends StatelessWidget {
   }
 }
 
-Widget TransactionCard() {
+Widget TransactionCard(HistoryTransaksiModel items) {
   return Card(
     color: Colors.white,
     margin: EdgeInsets.symmetric(vertical: 8.0),
@@ -62,29 +78,34 @@ Widget TransactionCard() {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildTimeAndStatus(),
+          _buildTimeAndStatus(items.status, items.tanggal),
           Divider(),
           SizedBox(height: 8.0),
           Row(
             children: [
-              _buildImage(),
+              _buildImage(items.urlImage),
               SizedBox(width: 16.0),
-              _buildContent(),
+              _buildContent(items.title, items.quantity, items.hargaTotal),
             ],
           ),
-          _buildBottonId(),
+          const SizedBox(
+            height: 10,
+          ),
+          _buildBottonId(items.idTransaksi),
         ],
       ),
     ),
   );
 }
 
-Row _buildTimeAndStatus() {
+Row _buildTimeAndStatus(String status, String tanggal) {
+  DateTime dateTime = DateTime.parse(tanggal);
+  String formatedDate = DateFormat('d MMMM y', 'id_ID').format(dateTime);
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
       Text(
-        '7 June 2024',
+        formatedDate,
         style: GoogleFonts.montserrat(
             color: greyPrimary, fontSize: 15, fontWeight: FontWeight.w600),
       ),
@@ -95,7 +116,7 @@ Row _buildTimeAndStatus() {
           borderRadius: BorderRadius.circular(4.0),
         ),
         child: Text(
-          'Done',
+          status,
           style: GoogleFonts.montserrat(
               color: Colors.green, fontSize: 15, fontWeight: FontWeight.w600),
         ),
@@ -104,13 +125,13 @@ Row _buildTimeAndStatus() {
   );
 }
 
-Widget _buildImage() {
+Widget _buildImage(String urlImage) {
   return Padding(
     padding: const EdgeInsets.only(top: 20),
     child: ClipRRect(
       borderRadius: BorderRadius.circular(8.0),
-      child: Image.asset(
-        'assets/brown_jacket.jpg',
+      child: Image.network(
+        urlImage,
         height: 65,
         width: 65,
         fit: BoxFit.cover,
@@ -119,19 +140,19 @@ Widget _buildImage() {
   );
 }
 
-Expanded _buildContent() {
+Expanded _buildContent(String name, String quantity, String harga) {
   return Expanded(
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Brown Suite',
+          name,
           style: GoogleFonts.montserrat(
-              color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+              color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 1.0),
         Text(
-          '10 pcs',
+          '$quantity pcs',
           style: GoogleFonts.montserrat(
               color: Colors.grey[600],
               fontSize: 15,
@@ -139,7 +160,7 @@ Expanded _buildContent() {
         ),
         SizedBox(height: 1.0),
         Text(
-          'Rp 10.000.000',
+          'Rp $harga K',
           style: GoogleFonts.montserrat(
             color: Colors.black,
             fontSize: 15,
@@ -152,30 +173,31 @@ Expanded _buildContent() {
   );
 }
 
-Row _buildBottonId() {
+Row _buildBottonId(String id) {
   return Row(
+    mainAxisAlignment: MainAxisAlignment.end,
     children: [
-      Text('#TR2456DEDK', style: TextStyle(color: greyPrimary)),
-      SizedBox(width: 16.0),
-      Spacer(),
-      ElevatedButton(
-        onPressed: () {},
-        style: ElevatedButton.styleFrom(
-          backgroundColor: brownSecondary,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(6.0),
-          ),
-          padding: EdgeInsets.all(12.0),
-        ),
-        child: Text(
-          'Buy Again',
-          style: GoogleFonts.montserrat(
-            color: Colors.white,
-            fontSize: 17,
-            fontWeight: FontWeight.normal,
-          ),
-        ),
-      ),
+      Text('#$id', style: TextStyle(color: greyPrimary)),
+      // SizedBox(width: 16.0),
+      // Spacer(),
+      // ElevatedButton(
+      //   onPressed: () {},
+      //   style: ElevatedButton.styleFrom(
+      //     backgroundColor: brownSecondary,
+      //     shape: RoundedRectangleBorder(
+      //       borderRadius: BorderRadius.circular(6.0),
+      //     ),
+      //     padding: EdgeInsets.all(12.0),
+      //   ),
+      //   child: Text(
+      //     'Buy Again',
+      //     style: GoogleFonts.montserrat(
+      //       color: Colors.white,
+      //       fontSize: 17,
+      //       fontWeight: FontWeight.normal,
+      //     ),
+      //   ),
+      // ),
     ],
   );
 }
