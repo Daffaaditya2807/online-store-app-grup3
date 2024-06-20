@@ -32,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
       if (e.code == 'user-not-found') {
         return 'The Email is Not Registered Yet';
       } else if (e.code == 'wrong-password') {
-        return 'Your Password is wrong';
+        return 'Your Password is Wrong';
       }
       return e.message;
     } catch (e) {
