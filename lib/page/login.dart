@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'navigation_bar.dart';
@@ -16,6 +17,45 @@ class _LoginPageState extends State<LoginPage> {
     setState(() {
       _obscureText = !_obscureText;
     });
+  }
+
+  Future<String?> signIn(
+      {required String email, required String password}) async {
+    try {
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      return 'Login Successful';
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        return 'The Email is Not Registered Yet';
+      } else if (e.code == 'wrong-password') {
+        return 'Your Password is wrong';
+      }
+      return e.message;
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  void _showAlertDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("Login"),
+        content: Text(message),
+        actions: <Widget>[
+          TextButton(
+            child: Text('OK'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -74,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
             TextField(
               controller: _emailController,
               decoration: InputDecoration(
-                hintText: 'dekastore@gmail.comm',
+                hintText: 'dekastore@gmail.com',
                 hintStyle: GoogleFonts.montserrat(
                   textStyle: TextStyle(
                     fontSize: 15,
@@ -124,13 +164,22 @@ class _LoginPageState extends State<LoginPage> {
             ),
             SizedBox(height: 50),
             ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => NavigationBarBottom(),
-                  ),
+              onPressed: () async {
+                var message = await signIn(
+                  email: _emailController.text,
+                  password: _passwordController.text,
                 );
+                if (message == 'Login Successful') {
+                  _showAlertDialog('Login Successful');
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => NavigationBarBottom(),
+                    ),
+                  );
+                } else {
+                  _showAlertDialog(message ?? 'Your Password is Wrong');
+                }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFF6F4E37),

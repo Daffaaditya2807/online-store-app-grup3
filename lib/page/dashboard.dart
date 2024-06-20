@@ -221,7 +221,7 @@ class _DashboardPageState extends State<DashboardPage>
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(
-                                  'Get 50% off on your first purchase',
+                                  'Welcome to Deka Store!',
                                   style: GoogleFonts.montserrat(
                                     textStyle: const TextStyle(
                                       fontSize: 20,
