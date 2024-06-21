@@ -47,11 +47,11 @@ class _PaymentOptionsPageState extends State<PaymentOptionsPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 30),
-                  _buildCreateDebitCard(),
+                  // const SizedBox(height: 30),
+                  // _buildCreateDebitCard(),
                   const SizedBox(height: 30),
                   Text(
-                    'More Payment Options',
+                    'Payment Options',
                     style: GoogleFonts.montserrat(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,

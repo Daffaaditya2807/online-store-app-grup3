@@ -5,17 +5,20 @@ import 'package:online_app_final_project/model/transaction_history.dart';
 class HistoryTransaction extends GetxController {
   var historyTrans = <HistoryTransaksiModel>[].obs;
 
+  String? uidTrans;
+  HistoryTransaction({required this.uidTrans});
+
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    fetchTransactionHistory();
+    fetchTransactionHistory(uidTrans!);
   }
 
-  void fetchTransactionHistory() async {
+  void fetchTransactionHistory(String uid) async {
     final databaseReference =
         FirebaseDatabase.instance.ref().child('transactionHistory');
-    databaseReference.once().then((DatabaseEvent event) {
+    databaseReference.onValue.listen((DatabaseEvent event) {
       List<HistoryTransaksiModel> temphHistory = [];
       final dataSnapshot = event.snapshot;
       if (dataSnapshot.value != null) {
@@ -25,7 +28,7 @@ class HistoryTransaction extends GetxController {
           ..sort((a, b) => b.key.compareTo(a.key));
         sortedEntries.forEach((entry) {
           var value = entry.value;
-          if (value['uid'] == "3i3wEYEYMvVCz9X6V09RXF7eljz1") {
+          if (value['uid'] == uid) {
             temphHistory.add(HistoryTransaksiModel.fromJson(
                 Map<String, dynamic>.from(value)));
           }

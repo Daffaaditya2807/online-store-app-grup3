@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'login.dart';
 
@@ -13,6 +14,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
   late DatabaseReference dbRef;
   User? user;
   bool _obscureText = true;
@@ -30,13 +33,16 @@ class _RegisterPageState extends State<RegisterPage> {
     dbRef = FirebaseDatabase.instance.ref().child("user");
   }
 
-  void createRecord(String email, String password, String name, User user) {
+  void createRecord(String email, String password, String name, User user,
+      String phone, String alamat) {
     try {
       Map<String, String> userss = {
         'uid': user.uid,
         'nama': name,
         'email': email,
-        'password': password
+        'phone': phone,
+        'password': password,
+        'alamat': alamat
       };
       dbRef.push().set(userss).then((value) {
         Navigator.pushReplacement(
@@ -74,12 +80,30 @@ class _RegisterPageState extends State<RegisterPage> {
     return user;
   }
 
+  void _showAlertDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("Register"),
+        content: Text(message),
+        actions: <Widget>[
+          TextButton(
+            child: Text('OK'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -92,11 +116,11 @@ class _RegisterPageState extends State<RegisterPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(height: 2),
+            const SizedBox(height: 2),
             Text(
               'Open an Account',
               style: GoogleFonts.montserrat(
-                textStyle: TextStyle(
+                textStyle: const TextStyle(
                   fontSize: 23,
                   fontWeight: FontWeight.w600,
                   color: Color(0xFF1F2029),
@@ -104,11 +128,11 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Text(
               'Enter your details below to create your account.',
               style: GoogleFonts.montserrat(
-                textStyle: TextStyle(
+                textStyle: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w400,
                   color: Color(0xFF797979),
@@ -116,11 +140,11 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
             Text(
               'Nama',
               style: GoogleFonts.montserrat(
-                textStyle: TextStyle(
+                textStyle: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                   color: Color(0xFF1F2029),
@@ -132,7 +156,7 @@ class _RegisterPageState extends State<RegisterPage> {
               decoration: InputDecoration(
                 hintText: 'dekastoreaja',
                 hintStyle: GoogleFonts.montserrat(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w400,
                     color: Color(0xFF797979),
@@ -143,11 +167,11 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Text(
               'Email',
               style: GoogleFonts.montserrat(
-                textStyle: TextStyle(
+                textStyle: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                   color: Color(0xFF1F2029),
@@ -159,7 +183,7 @@ class _RegisterPageState extends State<RegisterPage> {
               decoration: InputDecoration(
                 hintText: 'dekastore@gmail.com',
                 hintStyle: GoogleFonts.montserrat(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w400,
                     color: Color(0xFF797979),
@@ -170,11 +194,74 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
+            Text(
+              'Phone',
+              style: GoogleFonts.montserrat(
+                textStyle: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xFF1F2029),
+                ),
+              ),
+            ),
+            TextField(
+              controller: _phoneController,
+              maxLength: 12,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+              ],
+              keyboardType: TextInputType.number,
+              buildCounter: (BuildContext context,
+                  {int? currentLength, int? maxLength, bool? isFocused}) {
+                return null;
+              },
+              decoration: InputDecoration(
+                hintText: '085xxxxxx',
+                hintStyle: GoogleFonts.montserrat(
+                  textStyle: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xFF797979),
+                  ),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(100),
+                ),
+              ),
+            ),
+            const SizedBox(height: 30),
+            Text(
+              'Address',
+              style: GoogleFonts.montserrat(
+                textStyle: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xFF1F2029),
+                ),
+              ),
+            ),
+            TextField(
+              controller: _addressController,
+              decoration: InputDecoration(
+                hintText: 'Road Country...',
+                hintStyle: GoogleFonts.montserrat(
+                  textStyle: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xFF797979),
+                  ),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(100),
+                ),
+              ),
+            ),
+            const SizedBox(height: 30),
             Text(
               'Password',
               style: GoogleFonts.montserrat(
-                textStyle: TextStyle(
+                textStyle: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                   color: Color(0xFF1F2029),
@@ -187,7 +274,7 @@ class _RegisterPageState extends State<RegisterPage> {
               decoration: InputDecoration(
                 hintText: '************',
                 hintStyle: GoogleFonts.montserrat(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w400,
                     color: Color(0xFF797979),
@@ -196,7 +283,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 suffixIcon: IconButton(
                   icon: Icon(
                     _obscureText ? Icons.visibility_off : Icons.visibility,
-                    color: Color(0xFF1F2029),
+                    color: const Color(0xFF1F2029),
                   ),
                   onPressed: _togglePasswordVisibility,
                 ),
@@ -205,28 +292,41 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ),
             ),
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
             ElevatedButton(
               onPressed: () async {
-                try {
-                  var user = await signUp(
-                      email: _emailController.text,
-                      password: _passwordController.text);
-                  createRecord(_emailController.text, _passwordController.text,
-                      _nameController.text, user!);
-                } catch (e) {}
+                if (_emailController.text.isEmpty ||
+                    _passwordController.text.isEmpty ||
+                    _nameController.text.isEmpty ||
+                    _phoneController.text.isEmpty ||
+                    _addressController.text.isEmpty) {
+                  _showAlertDialog("Please Complete All Field");
+                } else {
+                  try {
+                    var user = await signUp(
+                        email: _emailController.text.trim(),
+                        password: _passwordController.text);
+                    createRecord(
+                        _emailController.text.trim(),
+                        _passwordController.text,
+                        _nameController.text,
+                        user!,
+                        _phoneController.text.trim(),
+                        _addressController.text);
+                  } catch (e) {}
+                }
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF6F4E37),
+                backgroundColor: const Color(0xFF6F4E37),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(100),
                 ),
-                padding: EdgeInsets.symmetric(vertical: 15),
+                padding: const EdgeInsets.symmetric(vertical: 15),
               ),
               child: Text(
                 'Sign Up',
                 style: GoogleFonts.montserrat(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                     color: Color(0xFFEDEDED),

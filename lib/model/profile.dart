@@ -4,13 +4,15 @@ class ProfileModel {
   final String password;
   final String email;
   final String phone;
+  final String alamat;
 
   ProfileModel(
       {required this.uid,
       required this.name,
       required this.password,
       required this.email,
-      required this.phone});
+      required this.phone,
+      required this.alamat});
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
     return ProfileModel(
@@ -18,7 +20,8 @@ class ProfileModel {
         name: json['nama'],
         password: json['password'],
         email: json['email'],
-        phone: json['phone']);
+        phone: json['phone'],
+        alamat: json['alamat']);
   }
 
   Map<String, dynamic> toJson() {
@@ -28,6 +31,7 @@ class ProfileModel {
       'password': password,
       'email': email,
       'phone': phone,
+      'alamat': alamat
     };
   }
 }

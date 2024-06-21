@@ -12,6 +12,7 @@ class _LoginPageState extends State<LoginPage> {
   bool _obscureText = true;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  User? user;
 
   void _togglePasswordVisibility() {
     setState(() {
@@ -19,7 +20,7 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  Future<String?> signIn(
+  Future<User?> signIn(
       {required String email, required String password}) async {
     try {
       UserCredential userCredential =
@@ -27,17 +28,19 @@ class _LoginPageState extends State<LoginPage> {
         email: email,
         password: password,
       );
-      return 'Login Successful';
+      user = userCredential.user;
+      return user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        return 'The Email is Not Registered Yet';
+        print('The Email is Not Registered Yet');
       } else if (e.code == 'wrong-password') {
-        return 'Your Password is Wrong';
+        print('Your Password is Wrong');
       }
-      return e.message;
+      print(e.message);
     } catch (e) {
-      return e.toString();
+      print(e.toString());
     }
+    return null;
   }
 
   void _showAlertDialog(String message) {
@@ -165,20 +168,27 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(height: 50),
             ElevatedButton(
               onPressed: () async {
-                var message = await signIn(
-                  email: _emailController.text,
-                  password: _passwordController.text,
-                );
-                if (message == 'Login Successful') {
-                  _showAlertDialog('Login Successful');
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => NavigationBarBottom(),
-                    ),
-                  );
+                if (_emailController.text.isEmpty ||
+                    _passwordController.text.isEmpty) {
+                  _showAlertDialog(
+                      "Please Completed field username or password!");
                 } else {
-                  _showAlertDialog(message ?? 'Your Password is Wrong');
+                  await signIn(
+                    email: _emailController.text.trim(),
+                    password: _passwordController.text.trim(),
+                  ).then((value) {
+                    if (value != null) {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => NavigationBarBottom(),
+                        ),
+                      );
+                    } else {
+                      _showAlertDialog(
+                          "Username Password Incorrect! Please Check Username or Password");
+                    }
+                  });
                 }
               },
               style: ElevatedButton.styleFrom(

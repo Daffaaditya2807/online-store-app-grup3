@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:online_app_final_project/controller/profile_controller.dart';
@@ -154,6 +155,17 @@ class _ProfileDetailState extends State<ProfileDetail> {
                   child: Container(
                     child: TextField(
                       controller: _phone,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
+                      buildCounter: (BuildContext context,
+                          {int? currentLength,
+                          int? maxLength,
+                          bool? isFocused}) {
+                        return null;
+                      },
+                      maxLength: 12,
+                      keyboardType: TextInputType.phone,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25),
@@ -201,6 +213,11 @@ class _ProfileDetailState extends State<ProfileDetail> {
                       if (_nama!.text.isEmpty ||
                           _email!.text.isEmpty ||
                           _phone!.text.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                              content: Text(
+                                  'this field has blank, please complete!')),
+                        );
                       } else {
                         profileController.updateProfileByUid(
                             widget.profileModel.uid,

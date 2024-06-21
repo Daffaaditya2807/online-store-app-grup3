@@ -139,7 +139,7 @@ class _TransactionDetailPageState extends State<TransactionDetailPage> {
               ),
             ),
           ),
-          buildBottomButton(),
+          // buildBottomButton(),
         ],
       ),
     );

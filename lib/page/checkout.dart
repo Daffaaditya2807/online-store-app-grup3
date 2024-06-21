@@ -1,4 +1,5 @@
 import 'package:dotted_line/dotted_line.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,6 +7,7 @@ import 'package:online_app_final_project/component/button.dart';
 import 'package:online_app_final_project/component/list_colour.dart';
 import 'package:online_app_final_project/component/text_field.dart';
 import 'package:online_app_final_project/controller/cart_controller.dart';
+import 'package:online_app_final_project/controller/profile_controller.dart';
 import 'package:online_app_final_project/database/db_model_cart_item.dart';
 import 'package:online_app_final_project/page/done_checkout.dart';
 
@@ -23,6 +25,27 @@ class _CheckoutLastState extends State<CheckoutLast> {
   final TextEditingController _nama = TextEditingController();
   final TextEditingController _phone = TextEditingController();
   final TextEditingController _alamat = TextEditingController();
+  final profileController = Get.put(ProfileController());
+
+  User? user;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      profileController.fetchProfileByUid(user!.uid);
+      profileController.profile.listen((profile) {
+        if (profile != null) {
+          _nama.text = profile.name;
+          _phone.text = profile.phone;
+          _alamat.text = profile.alamat;
+        }
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,7 +121,7 @@ class _CheckoutLastState extends State<CheckoutLast> {
                   colorButton: brownSecondary,
                   onPress: () {
                     // String uid = FirebaseAuth.instance.currentUser?.uid ?? "";
-                    String uid = "3i3wEYEYMvVCz9X6V09RXF7eljz1";
+                    String uid = user!.uid;
                     DateTime tanggal = DateTime.now();
                     String metodeBayar = widget.payments;
                     cartController.createRecordTransaction(

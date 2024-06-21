@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:online_app_final_project/controller/history_transaction.dart';
 import 'package:online_app_final_project/controller/profile_controller.dart';
+import 'package:online_app_final_project/page/login.dart';
 import 'package:online_app_final_project/page/profile_detail.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
@@ -13,10 +16,18 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  User? user;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    user = FirebaseAuth.instance.currentUser;
+  }
+
   @override
   Widget build(BuildContext context) {
     final ProfileController profileController = Get.put(ProfileController());
-    profileController.fetchProfileByUid("mgFOcL4vJVPqYbCS1f72Hs8MRVq1");
+    profileController.fetchProfileByUid(user!.uid.toString());
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -56,7 +67,7 @@ class _ProfileState extends State<Profile> {
                 ),
                 Obx(() {
                   if (profileController.profile.value == null) {
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   } else {
                     return Text(
                       profileController.profile.value!.name,
@@ -88,7 +99,7 @@ class _ProfileState extends State<Profile> {
                           PageTransitionAnimation.cupertino,
                     );
                   },
-                  child: Container(
+                  child: SizedBox(
                     height: 35,
                     width: 325,
                     child: Stack(
@@ -253,7 +264,7 @@ class _ProfileState extends State<Profile> {
                   onTap: () {
                     _showLogoutDialog(context);
                   },
-                  child: Container(
+                  child: SizedBox(
                     height: 35,
                     width: 325,
                     child: Stack(
@@ -354,9 +365,11 @@ class _ProfileState extends State<Profile> {
                   color: Colors.red,
                 ),
               ),
-              onPressed: () {
+              onPressed: () async {
                 // Add your logout logic here
-                Navigator.of(context).pop();
+                await FirebaseAuth.instance.signOut();
+                Get.offAll(LoginPage());
+                Get.delete<HistoryTransaction>();
               },
             ),
           ],

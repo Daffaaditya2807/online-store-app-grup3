@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,11 +9,26 @@ import 'package:online_app_final_project/controller/history_transaction.dart';
 import 'package:online_app_final_project/model/transaction_history.dart';
 import 'package:online_app_final_project/page/e-receipt.dart';
 
-class TransactionHistoryPage extends StatelessWidget {
+class TransactionHistoryPage extends StatefulWidget {
+  @override
+  State<TransactionHistoryPage> createState() => _TransactionHistoryPageState();
+}
+
+class _TransactionHistoryPageState extends State<TransactionHistoryPage> {
+  User? user;
+  HistoryTransaction? transactionController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    user = FirebaseAuth.instance.currentUser;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final HistoryTransaction transactionController =
-        Get.put(HistoryTransaction(), permanent: true);
+    transactionController =
+        Get.put(HistoryTransaction(uidTrans: user!.uid), tag: user!.uid);
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -30,17 +46,17 @@ class TransactionHistoryPage extends StatelessWidget {
                     fontWeight: FontWeight.w600),
               ),
               Obx(() {
-                if (transactionController.historyTrans.isEmpty) {
-                  return Center(child: CircularProgressIndicator());
+                if (transactionController!.historyTrans.isEmpty) {
+                  return const Center(child: Text("Tidak Ada Riwayat History"));
                 } else {
                   return ListView.builder(
                     padding: EdgeInsets.all(16.0),
-                    itemCount: transactionController.historyTrans.length,
+                    itemCount: transactionController!.historyTrans.length,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
                       var itemsValues =
-                          transactionController.historyTrans[index];
+                          transactionController!.historyTrans[index];
                       return InkWell(
                           onTap: () {
                             Get.to(
