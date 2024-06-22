@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:online_app_final_project/component/list_colour.dart';
 import 'login.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -108,9 +109,11 @@ class _RegisterPageState extends State<RegisterPage> {
             Navigator.pop(context);
           },
         ),
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
         elevation: 0,
       ),
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -142,7 +145,7 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             const SizedBox(height: 50),
             Text(
-              'Nama',
+              'Name',
               style: GoogleFonts.montserrat(
                 textStyle: const TextStyle(
                   fontSize: 16,
@@ -165,6 +168,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(100),
                 ),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(100),
+                    borderSide: BorderSide(color: brownPrimary, width: 1.5)),
               ),
             ),
             const SizedBox(height: 30),
@@ -192,6 +198,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(100),
                 ),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(100),
+                    borderSide: BorderSide(color: brownPrimary, width: 1.5)),
               ),
             ),
             const SizedBox(height: 30),
@@ -228,6 +237,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(100),
                 ),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(100),
+                    borderSide: BorderSide(color: brownPrimary, width: 1.5)),
               ),
             ),
             const SizedBox(height: 30),
@@ -255,6 +267,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(100),
                 ),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(100),
+                    borderSide: BorderSide(color: brownPrimary, width: 1.5)),
               ),
             ),
             const SizedBox(height: 30),
@@ -290,6 +305,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(100),
                 ),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(100),
+                    borderSide: BorderSide(color: brownPrimary, width: 1.5)),
               ),
             ),
             const SizedBox(height: 50),

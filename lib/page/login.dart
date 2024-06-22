@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:online_app_final_project/component/list_colour.dart';
 import 'navigation_bar.dart';
 
 class LoginPage extends StatefulWidget {
@@ -47,11 +48,11 @@ class _LoginPageState extends State<LoginPage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text("Login"),
+        title: const Text("Login"),
         content: Text(message),
         actions: <Widget>[
           TextButton(
-            child: Text('OK'),
+            child: const Text('OK'),
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -66,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -79,11 +80,11 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(height: 2),
+            const SizedBox(height: 2),
             Text(
               'Access Account',
               style: GoogleFonts.montserrat(
-                textStyle: TextStyle(
+                textStyle: const TextStyle(
                   fontSize: 23,
                   fontWeight: FontWeight.w600,
                   color: Color(0xFF1F2029),
@@ -91,11 +92,11 @@ class _LoginPageState extends State<LoginPage> {
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Text(
               'Welcome back, we\'ve missed you!',
               style: GoogleFonts.montserrat(
-                textStyle: TextStyle(
+                textStyle: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w400,
                   color: Color(0xFF797979),
@@ -103,11 +104,11 @@ class _LoginPageState extends State<LoginPage> {
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
             Text(
               'Email',
               style: GoogleFonts.montserrat(
-                textStyle: TextStyle(
+                textStyle: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                   color: Color(0xFF1F2029),
@@ -119,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
               decoration: InputDecoration(
                 hintText: 'dekastore@gmail.com',
                 hintStyle: GoogleFonts.montserrat(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w400,
                     color: Color(0xFF797979),
@@ -128,13 +129,16 @@ class _LoginPageState extends State<LoginPage> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(100),
                 ),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(100),
+                    borderSide: BorderSide(color: brownPrimary, width: 1.5)),
               ),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Text(
               'Password',
               style: GoogleFonts.montserrat(
-                textStyle: TextStyle(
+                textStyle: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                   color: Color(0xFF1F2029),
@@ -147,7 +151,7 @@ class _LoginPageState extends State<LoginPage> {
               decoration: InputDecoration(
                 hintText: '************',
                 hintStyle: GoogleFonts.montserrat(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w400,
                     color: Color(0xFF797979),
@@ -156,16 +160,19 @@ class _LoginPageState extends State<LoginPage> {
                 suffixIcon: IconButton(
                   icon: Icon(
                     _obscureText ? Icons.visibility_off : Icons.visibility,
-                    color: Color(0xFF1F2029),
+                    color: const Color(0xFF1F2029),
                   ),
                   onPressed: _togglePasswordVisibility,
                 ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(100),
                 ),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(100),
+                    borderSide: BorderSide(color: brownPrimary, width: 1.5)),
               ),
             ),
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
             ElevatedButton(
               onPressed: () async {
                 if (_emailController.text.isEmpty ||
@@ -181,7 +188,7 @@ class _LoginPageState extends State<LoginPage> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => NavigationBarBottom(),
+                          builder: (context) => const NavigationBarBottom(),
                         ),
                       );
                     } else {
@@ -192,16 +199,16 @@ class _LoginPageState extends State<LoginPage> {
                 }
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF6F4E37),
+                backgroundColor: const Color(0xFF6F4E37),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(100),
                 ),
-                padding: EdgeInsets.symmetric(vertical: 15),
+                padding: const EdgeInsets.symmetric(vertical: 15),
               ),
               child: Text(
                 'Sign In',
                 style: GoogleFonts.montserrat(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                     color: Color(0xFFEDEDED),
@@ -209,7 +216,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-            Spacer(),
+            const Spacer(),
           ],
         ),
       ),

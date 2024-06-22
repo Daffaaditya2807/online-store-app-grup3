@@ -4,6 +4,7 @@ import 'package:online_app_final_project/component/list_colour.dart';
 import 'package:online_app_final_project/page/dashboard.dart';
 import 'package:online_app_final_project/page/favorite_product.dart';
 import 'package:online_app_final_project/page/my_order.dart';
+import 'package:online_app_final_project/page/product_list.dart';
 import 'package:online_app_final_project/page/profile_page.dart';
 
 class NavigationBarBottom extends StatefulWidget {
@@ -22,6 +23,7 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
   List<Widget> _buildScreens() {
     return [
       const DashboardPage(),
+      ProductList(),
 
       // Halaman Favorite taruh bawah IMPORT
       const FavoritePage(),
@@ -112,29 +114,6 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
                       ),
                     )),
               ),
-              // AnimatedContainer(
-              //   duration: const Duration(milliseconds: 500),
-              //   curve: Curves.ease,
-              //   decoration: ShapeDecoration(
-              //       shape: const CircleBorder(),
-              //       color: pageSelected == 1 ? Colors.white : brownSecondary),
-              //   child: Padding(
-              //       padding: const EdgeInsets.all(3),
-              //       child: IconButton(
-              //         onPressed: () {
-              //           setState(() {
-              //             myPage?.jumpToPage(1);
-              //             pageSelected = 1;
-              //           });
-              //         },
-              //         icon: Icon(
-              //           CupertinoIcons.cart,
-              //           color:
-              //               pageSelected == 1 ? brownSecondary : Colors.white,
-              //           size: 30,
-              //         ),
-              //       )),
-              // ),
               AnimatedContainer(
                 duration: const Duration(milliseconds: 500),
                 curve: Curves.ease,
@@ -151,7 +130,7 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
                         });
                       },
                       icon: Icon(
-                        CupertinoIcons.heart,
+                        Icons.shopping_bag,
                         color:
                             pageSelected == 1 ? brownSecondary : Colors.white,
                         size: 30,
@@ -165,8 +144,8 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
                     shape: const CircleBorder(),
                     color: pageSelected == 2 ? Colors.white : brownSecondary),
                 child: Padding(
-                  padding: const EdgeInsets.all(3),
-                  child: IconButton(
+                    padding: const EdgeInsets.all(3),
+                    child: IconButton(
                       onPressed: () {
                         setState(() {
                           myPage?.jumpToPage(2);
@@ -174,12 +153,12 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
                         });
                       },
                       icon: Icon(
-                        CupertinoIcons.doc_text,
+                        CupertinoIcons.heart,
                         color:
                             pageSelected == 2 ? brownSecondary : Colors.white,
                         size: 30,
-                      )),
-                ),
+                      ),
+                    )),
               ),
               AnimatedContainer(
                 duration: const Duration(milliseconds: 500),
@@ -197,9 +176,32 @@ class _NavigationBarBottomState extends State<NavigationBarBottom> {
                         });
                       },
                       icon: Icon(
-                        CupertinoIcons.profile_circled,
+                        CupertinoIcons.doc_text,
                         color:
                             pageSelected == 3 ? brownSecondary : Colors.white,
+                        size: 30,
+                      )),
+                ),
+              ),
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.ease,
+                decoration: ShapeDecoration(
+                    shape: const CircleBorder(),
+                    color: pageSelected == 4 ? Colors.white : brownSecondary),
+                child: Padding(
+                  padding: const EdgeInsets.all(3),
+                  child: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          myPage?.jumpToPage(4);
+                          pageSelected = 4;
+                        });
+                      },
+                      icon: Icon(
+                        CupertinoIcons.profile_circled,
+                        color:
+                            pageSelected == 4 ? brownSecondary : Colors.white,
                         size: 30.0,
                       )),
                 ),

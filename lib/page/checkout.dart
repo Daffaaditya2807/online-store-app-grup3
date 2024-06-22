@@ -57,9 +57,11 @@ class _CheckoutLastState extends State<CheckoutLast> {
               GoogleFonts.montserrat(fontSize: 20, fontWeight: FontWeight.w600),
         ),
         elevation: 0,
+        backgroundColor: Colors.white,
         surfaceTintColor: Colors.white,
         centerTitle: true,
       ),
+      backgroundColor: Colors.white,
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),

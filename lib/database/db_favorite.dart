@@ -101,6 +101,11 @@ class DatabaseHelperFavorite {
     await db.delete(tableCart, where: "id = ?", whereArgs: [id]);
   }
 
+  Future<void> clearCart() async {
+    final Database db = await database;
+    await db.delete(tableCart); // Deletes all entries in the cart table
+  }
+
   Future<DbCartItemModel> getCartItemById(String id) async {
     final Database db = await database;
     final List<Map<String, dynamic>> results =

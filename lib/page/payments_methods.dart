@@ -86,7 +86,7 @@ class _PaymentOptionsPageState extends State<PaymentOptionsPage> {
                         const Divider(),
                         _buildPaymentOption(
                           title: 'Cash',
-                          logo: 'assets/google-pay.png',
+                          logo: 'assets/money.png',
                           value: 'Cash',
                         ),
                       ],

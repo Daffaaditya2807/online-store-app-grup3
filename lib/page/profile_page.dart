@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:online_app_final_project/controller/history_transaction.dart';
 import 'package:online_app_final_project/controller/profile_controller.dart';
-import 'package:online_app_final_project/page/login.dart';
 import 'package:online_app_final_project/page/profile_detail.dart';
+import 'package:online_app_final_project/page/splash_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class Profile extends StatefulWidget {
@@ -29,6 +29,7 @@ class _ProfileState extends State<Profile> {
     final ProfileController profileController = Get.put(ProfileController());
     profileController.fetchProfileByUid(user!.uid.toString());
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -42,14 +43,11 @@ class _ProfileState extends State<Profile> {
                 Align(
                   alignment: Alignment.center,
                   child: Text(
-                    "Profile",
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.getFont(
-                      'Montserrat',
-                      fontWeight: FontWeight.w500,
-                      fontSize: 22,
-                      color: const Color(0xFF1F2029),
-                    ),
+                    'Profile',
+                    style: GoogleFonts.montserrat(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600),
                   ),
                 ),
               ],
@@ -150,114 +148,6 @@ class _ProfileState extends State<Profile> {
             const SizedBox(
               height: 15,
             ),
-            // Column(
-            //   children: [
-            //     GestureDetector(
-            //       onTap: () {},
-            //       child: Container(
-            //         height: 35,
-            //         width: 325,
-            //         child: Stack(
-            //           children: [
-            //             Positioned(
-            //                 top: 5,
-            //                 left: 5,
-            //                 child: Icon(
-            //                   Icons.card_membership,
-            //                   size: 30,
-            //                   color: Color.fromRGBO(121, 121, 121, 1),
-            //                 )),
-            //             Positioned(
-            //                 top: 5,
-            //                 left: 55,
-            //                 child: Text(
-            //                   "Payment Methods",
-            //                   textAlign: TextAlign.center,
-            //                   style: GoogleFonts.getFont(
-            //                     'Montserrat',
-            //                     fontWeight: FontWeight.w500,
-            //                     fontSize: 20,
-            //                     color: Color.fromRGBO(121, 121, 121, 1),
-            //                   ),
-            //                 )),
-            //             Positioned(
-            //               top: 5,
-            //               right: 5,
-            //               child: Icon(
-            //                 Icons.arrow_forward_ios,
-            //                 size: 24,
-            //                 color: Color.fromRGBO(121, 121, 121, 1),
-            //               ),
-            //             ),
-            //           ],
-            //         ),
-            //       ),
-            //     ),
-            //     const Divider(
-            //       thickness: 0.5,
-            //       indent: 80,
-            //       endIndent: 80,
-            //       color: Color.fromRGBO(121, 121, 121, 1),
-            //     )
-            //   ],
-            // ),
-            // SizedBox(
-            //   height: 15,
-            // ),
-            // Column(
-            //   children: [
-            //     GestureDetector(
-            //       onTap: () {},
-            //       child: Container(
-            //         height: 35,
-            //         width: 325,
-            //         child: Stack(
-            //           children: [
-            //             Positioned(
-            //                 top: 5,
-            //                 left: 5,
-            //                 child: Icon(
-            //                   Icons.shopping_bag_outlined,
-            //                   size: 30,
-            //                   color: Color.fromRGBO(121, 121, 121, 1),
-            //                 )),
-            //             Positioned(
-            //                 top: 5,
-            //                 left: 55,
-            //                 child: Text(
-            //                   "My Order",
-            //                   textAlign: TextAlign.center,
-            //                   style: GoogleFonts.getFont(
-            //                     'Montserrat',
-            //                     fontWeight: FontWeight.w500,
-            //                     fontSize: 20,
-            //                     color: Color.fromRGBO(121, 121, 121, 1),
-            //                   ),
-            //                 )),
-            //             Positioned(
-            //               top: 5,
-            //               right: 5,
-            //               child: Icon(
-            //                 Icons.arrow_forward_ios,
-            //                 size: 24,
-            //                 color: Color.fromRGBO(121, 121, 121, 1),
-            //               ),
-            //             ),
-            //           ],
-            //         ),
-            //       ),
-            //     ),
-            //     const Divider(
-            //       thickness: 0.5,
-            //       indent: 80,
-            //       endIndent: 80,
-            //       color: Color.fromRGBO(121, 121, 121, 1),
-            //     )
-            //   ],
-            // ),
-            // SizedBox(
-            //   height: 15,
-            // ),
             Column(
               children: [
                 GestureDetector(
@@ -368,7 +258,7 @@ class _ProfileState extends State<Profile> {
               onPressed: () async {
                 // Add your logout logic here
                 await FirebaseAuth.instance.signOut();
-                Get.offAll(LoginPage());
+                Get.offAll(const SplashScreen());
                 Get.delete<HistoryTransaction>();
               },
             ),

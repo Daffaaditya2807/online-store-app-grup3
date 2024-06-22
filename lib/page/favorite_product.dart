@@ -38,37 +38,49 @@ class _FavoritePageState extends State<FavoritePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
           child: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(
               height: 20,
             ),
             Image.asset("assets/logodashboard.png"),
-            ListView.builder(
-              itemCount: favorites.length,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                var items = favorites[index];
-                RatingAllProduct rate =
-                    RatingAllProduct(rate: items.rate, count: items.count);
-                ModelProductAll productAll = ModelProductAll(
-                    id: items.id,
-                    tittle: items.title,
-                    price: items.price,
-                    desc: items.desc,
-                    category: items.category,
-                    image: items.image,
-                    rate: rate);
-                return InkWell(
-                    onTap: () {
-                      Get.to(DetailProduct(modelProductAll: productAll));
+            favorites.isEmpty
+                ? const Center(
+                    child: Column(
+                      children: [
+                        Icon(CupertinoIcons.square_list),
+                        Text("List Favorite Is Empty"),
+                      ],
+                    ),
+                  )
+                : ListView.builder(
+                    itemCount: favorites.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      var items = favorites[index];
+                      RatingAllProduct rate = RatingAllProduct(
+                          rate: items.rate, count: items.count);
+                      ModelProductAll productAll = ModelProductAll(
+                          id: items.id,
+                          tittle: items.title,
+                          price: items.price,
+                          desc: items.desc,
+                          category: items.category,
+                          image: items.image,
+                          rate: rate);
+                      return InkWell(
+                          onTap: () {
+                            Get.to(DetailProduct(modelProductAll: productAll));
+                          },
+                          child: listCart(favorites[index]));
                     },
-                    child: listCart(favorites[index]));
-              },
-            ),
+                  ),
             const SizedBox(
               height: 100,
             )

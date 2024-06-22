@@ -19,7 +19,7 @@ TextField textFieldSearch(
             borderSide: BorderSide(color: greyPrimary.withAlpha(40))),
         focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(color: greyPrimary.withAlpha(40))),
+            borderSide: BorderSide(color: brownPrimary, width: 1.5)),
         enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(color: greyPrimary.withAlpha(40)))),
@@ -50,7 +50,7 @@ Widget textfield(
                 borderSide: BorderSide(color: greyPrimary.withAlpha(40))),
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(color: greyPrimary.withAlpha(40))),
+                borderSide: BorderSide(color: brownPrimary, width: 1.5)),
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
                 borderSide: BorderSide(color: greyPrimary.withAlpha(40)))),
@@ -84,7 +84,7 @@ Widget textfieldDesc(
                 borderSide: BorderSide(color: greyPrimary.withAlpha(40))),
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(color: greyPrimary.withAlpha(40))),
+                borderSide: BorderSide(color: brownPrimary, width: 1.5)),
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
                 borderSide: BorderSide(color: greyPrimary.withAlpha(40)))),

@@ -4,12 +4,15 @@ import 'package:online_app_final_project/component/button.dart';
 import 'package:online_app_final_project/component/list_colour.dart';
 import 'package:online_app_final_project/page/navigation_bar.dart';
 
+import '../database/db_favorite.dart';
+
 class DoneCheckOut extends StatelessWidget {
   const DoneCheckOut({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -38,7 +41,8 @@ class DoneCheckOut extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: button(
                   nameButton: "Complete",
-                  onPress: () {
+                  onPress: () async {
+                    await DatabaseHelperFavorite().clearCart();
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(

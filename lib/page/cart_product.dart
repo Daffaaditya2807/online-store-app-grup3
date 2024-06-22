@@ -1,4 +1,5 @@
 import 'package:dotted_line/dotted_line.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -27,7 +28,11 @@ class _CartProductState extends State<CartProduct> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
+        elevation: 0,
         title: Text(
           "Cart",
           style:
@@ -42,7 +47,18 @@ class _CartProductState extends State<CartProduct> {
               const SizedBox(
                 height: 10,
               ),
-              Obx(() => ListView.builder(
+              Obx(() {
+                if (cartController.cartItems.isEmpty) {
+                  return const Center(
+                    child: Column(
+                      children: [
+                        Icon(CupertinoIcons.square_list),
+                        Text("List Cart Product Is Empty"),
+                      ],
+                    ),
+                  );
+                } else {
+                  return ListView.builder(
                     itemCount: cartController.cartItems.length,
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
@@ -50,7 +66,9 @@ class _CartProductState extends State<CartProduct> {
                       final item = cartController.cartItems[index];
                       return listCart(item);
                     },
-                  )),
+                  );
+                }
+              }),
               const SizedBox(
                 height: 80,
               )

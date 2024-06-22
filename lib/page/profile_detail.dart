@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:online_app_final_project/component/list_colour.dart';
 import 'package:online_app_final_project/controller/profile_controller.dart';
 import 'package:online_app_final_project/model/profile.dart';
 
@@ -48,9 +49,10 @@ class _ProfileDetailState extends State<ProfileDetail> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_outlined),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(
               context,
@@ -59,6 +61,7 @@ class _ProfileDetailState extends State<ProfileDetail> {
           color: const Color(0xFF1F2029),
         ),
       ),
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -130,6 +133,10 @@ class _ProfileDetailState extends State<ProfileDetail> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25),
                         ),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25),
+                            borderSide:
+                                BorderSide(color: brownPrimary, width: 1.5)),
                         hintText: '  Enter your name',
                       ),
                     ),
@@ -170,6 +177,10 @@ class _ProfileDetailState extends State<ProfileDetail> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25),
                         ),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25),
+                            borderSide:
+                                BorderSide(color: brownPrimary, width: 1.5)),
                         hintText: '  +62 XXXXXXX',
                       ),
                     ),
@@ -200,6 +211,10 @@ class _ProfileDetailState extends State<ProfileDetail> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25),
                         ),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25),
+                            borderSide:
+                                BorderSide(color: brownPrimary, width: 1.5)),
                         hintText: '  yourname@example.com',
                       ),
                     ),
