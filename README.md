@@ -1,8 +1,10 @@
 # Abstract
 
-In the dynamic landscape of e-commerce, Deka Store emerges as a groundbreaking online shopping platform designed to meet the evolving needs of modern consumers. Our application leverages cutting-edge technology to deliver a seamless, user-friendly experience, ensuring convenience and satisfaction at every touchpoint. Deka Store offers an extensive range of products across various categories, from fashion and electronics to home essentials, all curated to provide the best value and quality.
+In the evolving e-commerce landscape, Deka Store is an online shopping platform designed for modern consumers. Our app uses current technology to provide a seamless and user-friendly experience, ensuring convenience and satisfaction. With a sophisticated design featuring warm tones, strong text contrasts, and clear content areas, Deka Store offers a wide range of products across various categories, from fashion, electronics, to jewellery. By focusing on user experience, security, and a diverse product selection, Deka Store aims to provide a superior online retail experience for all users.
 
-By prioritizing user experience, security, and a wide product selection, Deka Store sets a new standard in the online retail space. This abstract delves into the innovative features and strategic advantages of Deka Store, illustrating how it is poised to redefine the online shopping experience and meet the demands of today’s tech-savvy consumers.
+# Purpose of The Application
+
+The primary purpose of Deka Store is to provide an intuitive and efficient online shopping experience that meets the evolving needs of modern consumers. By user centric design, the application aims to enhance convenience, security, and satisfaction, offering a diverse selection of high-quality products and setting a new benchmark in the online retail industry.
 
 ## Download Now!
 
