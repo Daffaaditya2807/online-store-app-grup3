@@ -8,5 +8,7 @@ By prioritizing user experience, security, and a wide product selection, Deka St
 
 ## Download Now!
 
-![QR DEKA STORE BROWN](https://github.com/Daffaaditya2807/online-store-app-grup3/assets/61442383/fe1628be-2a2d-45da-882b-18dd66bb5d84)
+<img src="https://github.com/Daffaaditya2807/online-store-app-grup3/assets/61442383/c3acd2a2-6f12-4e4d-8969-18f4d9a50817" alt="Deka Store QR Code" width="200">
+
+
 
