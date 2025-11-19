@@ -4,6 +4,8 @@ import 'package:online_app_final_project/component/list_colour.dart';
 import 'package:online_app_final_project/page/checkout.dart';
 
 class PaymentOptionsPage extends StatefulWidget {
+  const PaymentOptionsPage({super.key});
+
   @override
   _PaymentOptionsPageState createState() => _PaymentOptionsPageState();
 }

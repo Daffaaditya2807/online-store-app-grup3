@@ -28,7 +28,7 @@ class _TransactionDetailPageState extends State<TransactionDetailPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Get.back();
           },
@@ -56,8 +56,8 @@ class _TransactionDetailPageState extends State<TransactionDetailPage> {
                       child:
                           Image.asset('assets/Deka_Store_Logo.png', height: 60),
                     ),
-                    Divider(),
-                    SizedBox(height: 15),
+                    const Divider(),
+                    const SizedBox(height: 15),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -70,7 +70,7 @@ class _TransactionDetailPageState extends State<TransactionDetailPage> {
                             fit: BoxFit.cover,
                           ),
                         ),
-                        SizedBox(width: 16),
+                        const SizedBox(width: 16),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,21 +104,21 @@ class _TransactionDetailPageState extends State<TransactionDetailPage> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 15),
-                    Divider(),
+                    const SizedBox(height: 15),
+                    const Divider(),
                     buildTransactionDetailRow('Amount',
                         'Rp. ${widget.historyTransaksiModel.hargaTotal} K'),
                     buildTransactionDetailRow('Delivery Charge', 'Rp.0 K'),
                     buildTransactionDetailRow('Promo', '-Rp.0 K'),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     DottedLine(dashColor: greyPrimary),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     buildTransactionDetailRow('Total',
                         'Rp. ${widget.historyTransaksiModel.hargaTotal} K'),
-                    SizedBox(height: 10),
-                    Divider(),
+                    const SizedBox(height: 10),
+                    const Divider(),
                     buildTransactionDetailRow('Payment Methods',
-                        '${widget.historyTransaksiModel.metodeBayar}'),
+                        widget.historyTransaksiModel.metodeBayar),
                     buildTransactionDetailRow('Date', formattedDate),
                     buildTransactionDetailRowWithIcon(
                       'ID Trans',
@@ -128,7 +128,7 @@ class _TransactionDetailPageState extends State<TransactionDetailPage> {
                       () {
                         Clipboard.setData(ClipboardData(text: transactionId));
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
+                          const SnackBar(
                               content:
                                   Text('Transaction ID copied to clipboard')),
                         );
@@ -216,8 +216,8 @@ class _TransactionDetailPageState extends State<TransactionDetailPage> {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        border: Border.all(color: Color.fromARGB(215, 215, 215, 215)),
-        borderRadius: BorderRadius.only(
+        border: Border.all(color: const Color.fromARGB(215, 215, 215, 215)),
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(10),
           topRight: Radius.circular(10),
         ),
@@ -228,7 +228,7 @@ class _TransactionDetailPageState extends State<TransactionDetailPage> {
           onPressed: () {},
           style: ElevatedButton.styleFrom(
             backgroundColor: brownSecondary,
-            minimumSize: Size.fromHeight(50),
+            minimumSize: const Size.fromHeight(50),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30.0),
             ),
